@@ -36,6 +36,7 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
 }
 
 .page-header {
@@ -49,6 +50,11 @@ select {
 }
 
 .page-main {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+}
+.play-section {
   padding: 10px;
   width: 50%;
   margin: 2rem;
@@ -127,6 +133,33 @@ select {
   list-style-type: none;
 }
 
+/* game rules */
+.rules-section {
+  padding: 10px;
+  width: 50%;
+  margin: 2rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background-color: #d3d6db;
+  border: 1px solid #d3d6db;
+  border-radius: 5px;
+}
+.rules-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.rules-header-text {
+  text-align: center;
+  flex-direction: row;
+  display: flex;
+  align-self: center;
+  margin-left: 15%;
+}
+.rules-list {
+  text-align: left;
+}
 /* .frame {
   width: 1000px;
   height: auto;
