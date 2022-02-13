@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classic Set paper game</title>
+    <link rel="stylesheet" href="css/paper.css" />
+  </head>
+  <body>
+    <div class="game-container" hidden>
+      <header class="game-header">
+        <ul id="players" class="players-list">
+          <li class="player-id">
+            <img
+              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+              alt="avatar"
+              width="70"
+              height="70"
+              class="img-avatar"
+            />
+            <p class="player-name">Player 1</p>
+          </li>
+          <li class="player-id">
+            <img
+              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Kurt&hairColor=Red&facialHairType=BeardLight&facialHairColor=Black&clotheType=CollarSweater&clotheColor=Gray02&eyeType=Happy&eyebrowType=FlatNatural&mouthType=Tongue&skinColor=Tanned"
+              alt="avatar"
+              width="70"
+              height="70"
+              class="img-avatar"
+            />
+            <p class="player-name">Player 2</p>
+          </li>
+        </ul>
+      </header>
+      <button class="hand-circle">
+        <!-- <p class="set-game">SET</p> -->
+        <img
+          src="./img/handIcon.png"
+          alt="hand"
+          width="110"
+          height="110"
+          class="img-hand"
+        />
+      </button>
+      <div class="card-list">
+        <div class="card card--active">
+          <div class="row-box">
+            <div class="box"></div>
+            <div class="box"></div>
+          </div>
+          <p class="card-name">Apple</p>
+          <div class="row-box">
+            <div class="box1"></div>
+            <div class="box1"></div>
+          </div>
+        </div>
+      </div>
+      <h4 class="user-info">
+        Select a card that you want to pass it to next player
+      </h4>
+      <footer class="game-footer">
+        <div class="user">
+          <img
+            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+            alt="avatar"
+            width="70"
+            height="70"
+            class="img-avatar"
+          />
+          <p class="user-name">Player name</p>
+        </div>
+        <button class="btn btn-end">End Turn</button>
+      </footer>
+    </div>
+    <div class="winner-container">
+      <div class="winner-main">
+        <p class="winner-text">Player 2 is the winner!!!</p>
+        <div class="points">
+          <p class="points-text">Points Table :</p>
+          <table class="points-table">
+            <thead>
+              <tr>
+                <td>Player Name</td>
+                <td>Points</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Player1</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>Player2</td>
+                <td>300</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-rejoin">Re-Join</button>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

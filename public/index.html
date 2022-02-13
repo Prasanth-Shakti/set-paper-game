@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classic Set paper game</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="text/javascript" src="js/app.js" defer></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div class="page-container">
+      <header class="page-header">
+        <h1>CLASSIC SET PAPER GAME</h1>
+      </header>
+      <main class="page-main">
+        <!-- host game -->
+
+        <div class="home-page host-game">
+          <h3>--- Host ---</h3>
+          <div class="input-container">
+            <div class="input-control">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter a player name"
+              />
+              <input
+                type="text"
+                name="cardName"
+                id="cardName"
+                placeholder="Enter a card name"
+              />
+            </div>
+            <div class="avatar">
+              <img
+                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                alt="avatar"
+                width="70"
+                height="70"
+                class="img-avatar"
+              />
+              <button class="btn-avatar">Random</button>
+            </div>
+          </div>
+
+          <button class="btn btn-host" id="btn-host">Host New Game</button>
+        </div>
+        <span class="separator">OR</span>
+
+        <!-- Guest Game -->
+
+        <div class="home-page guest-game">
+          <h3>--- Guest ---</h3>
+          <div class="input-container">
+            <div class="input-control">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter a player name"
+                required
+              />
+
+              <input
+                type="text"
+                name="cardName"
+                id="cardName"
+                placeholder="Enter a card name"
+                required
+              />
+            </div>
+            <div class="avatar">
+              <img
+                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                alt="avatar"
+                width="70"
+                height="70"
+                class="img-avatar"
+              />
+              <button class="btn-avatar">Random</button>
+            </div>
+          </div>
+
+          <div class="input-control">
+            <input
+              type="text"
+              name="gameID"
+              id="gameID"
+              placeholder="Enter Game ID"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-join">Join Game</button>
+        </div>
+
+        <!-- host settings page-->
+
+        <div class="home-page host-settings">
+          <div class="input-container">
+            <h3>Game ID : 34534-34534</h3>
+          </div>
+          <div class="input-container">
+            <h4>Max Players</h4>
+            <div class="input-control">
+              <select name="room" id="room">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+          <div class="players-list">
+            <div class="input-container">
+              <h4>Players Joined : 4</h4>
+            </div>
+            <ul id="players">
+              <li class="player-id">
+                <img
+                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                  alt="avatar"
+                  width="70"
+                  height="70"
+                  class="img-avatar"
+                />
+                <p class="player-name">Player 1</p>
+                <p class="player-card">Card : Apple</p>
+              </li>
+            </ul>
+            <button class="btn btn-start" id="btn-start">Start Game</button>
+          </div>
+        </div>
+
+        <!-- Guest settings -->
+
+        <div class="home-page guest-settings">
+          <h3 id="wait">Please wait for host to start the game ...</h3>
+          <div class="input-container">
+            <h4>Max Players : 4</h4>
+          </div>
+
+          <div class="players-list">
+            <div class="input-container">
+              <h4>Players Joined : 4</h4>
+            </div>
+            <ul id="players">
+              <li class="player-id">
+                <img
+                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                  alt="avatar"
+                  width="70"
+                  height="70"
+                  class="img-avatar player-avatar"
+                />
+                <p class="player-name">Player 1</p>
+                <p class="player-card">Card : Apple</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- <div class="frame">
+      <div class="plane-container">
+        <a href="http://customer.io/" target="_blank">
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            width="1131.53px"
+            height="379.304px"
+            viewBox="0 0 1131.53 379.304"
+            enable-background="new 0 0 1131.53 379.304"
+            xml:space="preserve"
+            class="plane"
+          >
+            <polygon
+              fill="#D8D8D8"
+              points="72.008,0 274.113,140.173 274.113,301.804 390.796,221.102 601.682,367.302 1131.53,0.223  "
+            />
+            <polygon
+              fill="#C4C4C3"
+              points="1131.53,0.223 274.113,140.173 274.113,301.804 390.796,221.102   "
+            /></svg
+        ></a>
+      </div>
+    </div>
+    <div class="clouds">
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        width="762px"
+        height="331px"
+        viewBox="0 0 762 331"
+        enable-background="new 0 0 762 331"
+        xml:space="preserve"
+        class="cloud big front slowest"
+      >
+        <path
+          fill="#FFFFFF"
+          d="M715.394,228h-16.595c0.79-5.219,1.201-10.562,1.201-16c0-58.542-47.458-106-106-106
+      c-8.198,0-16.178,0.932-23.841,2.693C548.279,45.434,488.199,0,417.5,0c-84.827,0-154.374,65.401-160.98,148.529
+      C245.15,143.684,232.639,141,219.5,141c-49.667,0-90.381,38.315-94.204,87H46.607C20.866,228,0,251.058,0,279.5
+      S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715.394,228z"
+        />
+      </svg>
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        width="762px"
+        height="331px"
+        viewBox="0 0 762 331"
+        enable-background="new 0 0 762 331"
+        xml:space="preserve"
+        class="cloud distant smaller"
+      >
+        <path
+          fill="#FFFFFF"
+          d="M715.394,228h-16.595c0.79-5.219,1.201-10.562,1.201-16c0-58.542-47.458-106-106-106
+      c-8.198,0-16.178,0.932-23.841,2.693C548.279,45.434,488.199,0,417.5,0c-84.827,0-154.374,65.401-160.98,148.529
+      C245.15,143.684,232.639,141,219.5,141c-49.667,0-90.381,38.315-94.204,87H46.607C20.866,228,0,251.058,0,279.5
+      S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715.394,228z"
+        />
+      </svg>
+
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        width="762px"
+        height="331px"
+        viewBox="0 0 762 331"
+        enable-background="new 0 0 762 331"
+        xml:space="preserve"
+        class="cloud small slow"
+      >
+        <path
+          fill="#FFFFFF"
+          d="M715.394,228h-16.595c0.79-5.219,1.201-10.562,1.201-16c0-58.542-47.458-106-106-106
+      c-8.198,0-16.178,0.932-23.841,2.693C548.279,45.434,488.199,0,417.5,0c-84.827,0-154.374,65.401-160.98,148.529
+      C245.15,143.684,232.639,141,219.5,141c-49.667,0-90.381,38.315-94.204,87H46.607C20.866,228,0,251.058,0,279.5
+      S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715.394,228z"
+        />
+      </svg>
+
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        width="762px"
+        height="331px"
+        viewBox="0 0 762 331"
+        enable-background="new 0 0 762 331"
+        xml:space="preserve"
+        class="cloud distant super-slow massive"
+      >
+        <path
+          fill="#FFFFFF"
+          d="M715.394,228h-16.595c0.79-5.219,1.201-10.562,1.201-16c0-58.542-47.458-106-106-106
+      c-8.198,0-16.178,0.932-23.841,2.693C548.279,45.434,488.199,0,417.5,0c-84.827,0-154.374,65.401-160.98,148.529
+      C245.15,143.684,232.639,141,219.5,141c-49.667,0-90.381,38.315-94.204,87H46.607C20.866,228,0,251.058,0,279.5
+      S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715.394,228z"
+        />
+      </svg>
+
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        width="762px"
+        height="331px"
+        viewBox="0 0 762 331"
+        enable-background="new 0 0 762 331"
+        xml:space="preserve"
+        class="cloud slower"
+      >
+        <path
+          fill="#FFFFFF"
+          d="M715.394,228h-16.595c0.79-5.219,1.201-10.562,1.201-16c0-58.542-47.458-106-106-106
+      c-8.198,0-16.178,0.932-23.841,2.693C548.279,45.434,488.199,0,417.5,0c-84.827,0-154.374,65.401-160.98,148.529
+      C245.15,143.684,232.639,141,219.5,141c-49.667,0-90.381,38.315-94.204,87H46.607C20.866,228,0,251.058,0,279.5
+      S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715.394,228z"
+        />
+      </svg>
+    </div> -->
+  </body>
+</html>
