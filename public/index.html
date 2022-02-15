@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Classic Set paper game</title>
     <link rel="stylesheet" href="css/style.css" />
-    <!-- <script type="text/javascript" src="js/app.js" defer></script> -->
+    <!-- <link rel="stylesheet" href="css/paper.css" /> -->
+    <script src="js/app.js" defer></script>
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <div class="page-container">
-      <header class="page-header">
+    <div class="home-page-container">
+      <div class="home-page-header">
         <h1>CLASSIC SET PAPER GAME</h1>
-      </header>
-      <main class="page-main">
-        <div class="play-section">
+      </div>
+      <div class="page-main">
+        <div class="play-section play-game">
           <!-- host game -->
 
-          <div class="home-page host-game">
+          <div class="home-page">
             <h3>--- Host ---</h3>
             <div class="input-container">
               <div class="input-control">
@@ -41,7 +42,8 @@
                   alt="avatar"
                   width="70"
                   height="70"
-                  class="img-avatar"
+                  class="img-avatar player-avatar"
+                  id="host-img"
                 />
                 <button class="btn-avatar">Random</button>
               </div>
@@ -53,22 +55,22 @@
 
           <!-- Guest Game -->
 
-          <div class="home-page guest-game">
+          <div class="home-page">
             <h3>--- Guest ---</h3>
             <div class="input-container">
               <div class="input-control">
                 <input
                   type="text"
-                  name="name"
-                  id="name"
+                  name="guest-name"
+                  id="guest-name"
                   placeholder="Enter a player name"
                   required
                 />
 
                 <input
                   type="text"
-                  name="cardName"
-                  id="cardName"
+                  name="guest-cardName"
+                  id="guest-cardName"
                   placeholder="Enter a card name"
                   required
                 />
@@ -79,7 +81,8 @@
                   alt="avatar"
                   width="70"
                   height="70"
-                  class="img-avatar"
+                  id="guest-img"
+                  class="img-avatar player-avatar"
                 />
                 <button class="btn-avatar">Random</button>
               </div>
@@ -88,25 +91,25 @@
             <div class="input-control">
               <input
                 type="text"
-                name="gameID"
-                id="gameID"
+                name="guest-gameID"
+                id="guest-gameID"
                 placeholder="Enter Game ID"
                 required
               />
             </div>
             <button type="submit" class="btn btn-join">Join Game</button>
           </div>
-
-          <!-- host settings page-->
-
-          <div class="home-page host-settings" hidden>
-            <div class="input-container">
+        </div>
+        <!-- host settings page-->
+        <div class="settings-section settings-section-display">
+          <div class="home-page host-settings">
+            <div class="input-container game-room">
               <h3>Game ID : 34534-34534</h3>
             </div>
             <div class="input-container">
               <h4>Max Players</h4>
               <div class="input-control">
-                <select name="room" id="room">
+                <select name="room" id="select-max-players">
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
@@ -119,10 +122,10 @@
               </div>
             </div>
             <div class="players-list">
-              <div class="input-container">
+              <div class="input-container players-joined">
                 <h4>Players Joined : 4</h4>
               </div>
-              <ul id="players">
+              <ul class="players players-host">
                 <li class="player-id">
                   <img
                     src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
@@ -138,27 +141,28 @@
               <button class="btn btn-start" id="btn-start">Start Game</button>
             </div>
           </div>
+        </div>
 
-          <!-- Guest settings -->
-
-          <div class="home-page guest-settings" hidden>
+        <!-- Guest settings -->
+        <div class="settings-section settings-section-display">
+          <div class="home-page guest-settings">
             <h3 id="wait">Please wait for host to start the game ...</h3>
-            <div class="input-container">
-              <h4>Max Players : 4</h4>
+            <div class="input-container max-players">
+              <h4>Max Players : 3</h4>
             </div>
 
             <div class="players-list">
-              <div class="input-container">
+              <div class="input-container players-joined">
                 <h4>Players Joined : 4</h4>
               </div>
-              <ul id="players">
+              <ul class="players">
                 <li class="player-id">
                   <img
                     src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
                     alt="avatar"
                     width="70"
                     height="70"
-                    class="img-avatar player-avatar"
+                    class="img-avatar"
                   />
                   <p class="player-name">Player 1</p>
                   <p class="player-card">Card : Apple</p>
@@ -167,10 +171,9 @@
             </div>
           </div>
         </div>
-
         <!-- rules for the game -->
-        <div class="rules-section">
-          <div class="home-page rules-game">
+        <div class="rules-section play-game">
+          <div class="home-page">
             <div class="rules-header">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -467,7 +470,112 @@
             </ul>
           </div>
         </div>
-      </main>
+      </div>
+    </div>
+    <div class="game-container">
+      <div class="game-header">
+        <ul id="other-players" class="players-list">
+          <ul id="players" class="players-list">
+            <li class="player-id">
+              <img
+                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                alt="avatar"
+                width="70"
+                height="70"
+                class="img-avatar"
+              />
+              <p class="player-name">Player 1</p>
+            </li>
+            <li class="player-id">
+              <img
+                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Kurt&hairColor=Red&facialHairType=BeardLight&facialHairColor=Black&clotheType=CollarSweater&clotheColor=Gray02&eyeType=Happy&eyebrowType=FlatNatural&mouthType=Tongue&skinColor=Tanned"
+                alt="avatar"
+                width="70"
+                height="70"
+                class="img-avatar"
+              />
+              <p class="player-name">Player 2</p>
+            </li>
+          </ul>
+        </ul>
+      </div>
+      <button class="hand-circle">
+        <!-- <p class="set-game">SET</p> -->
+        <img
+          src="./img/handIcon.png"
+          alt="hand"
+          width="110"
+          height="110"
+          class="img-hand"
+        />
+      </button>
+      <div class="card-list">
+        <div class="card card--active">
+          <div class="row-box">
+            <div class="box"></div>
+            <div class="box"></div>
+          </div>
+          <p class="card-name">Apple</p>
+          <div class="row-box">
+            <div class="box1"></div>
+            <div class="box1"></div>
+          </div>
+        </div>
+        <div class="card card--active">
+          <div class="row-box">
+            <div class="box"></div>
+            <div class="box"></div>
+          </div>
+          <p class="card-name">Apple</p>
+          <div class="row-box">
+            <div class="box1"></div>
+            <div class="box1"></div>
+          </div>
+        </div>
+      </div>
+      <h4 class="user-info">
+        Select a card that you want to pass it to next player
+      </h4>
+      <div class="game-footer">
+        <div class="user">
+          <img
+            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+            alt="avatar"
+            width="70"
+            height="70"
+            class="img-avatar"
+          />
+          <p class="user-name">Player name</p>
+        </div>
+        <button class="btn btn-end">End Turn</button>
+      </div>
+    </div>
+    <div class="winner-container" hidden>
+      <div class="winner-main">
+        <p class="winner-text">Player 2 is the winner!!!</p>
+        <div class="points">
+          <p class="points-text">Points Table :</p>
+          <table class="points-table">
+            <thead>
+              <tr>
+                <td>Player Name</td>
+                <td>Points</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Player1</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>Player2</td>
+                <td>300</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-rejoin">Re-Join</button>
+      </div>
     </div>
   </body>
 </html>
