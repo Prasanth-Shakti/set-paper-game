@@ -36,21 +36,34 @@ tr {
 
 input,
 select {
-  height: 35px;
+  height: 50px;
   border-radius: 5px;
   border: 1px solid #aaaaaa;
-  padding-left: 2px;
-  margin-top: 1rem;
+  padding-left: 10px;
+  font-size: 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+select {
+  width: 100px;
+  height: 40px;
 }
 
-/* home page */
-.home-page-container {
+/* -------------- high level containers -------------------*/
+.home-page-container,
+.game-page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #abe9cd;
+}
+
+.home-page-container {
   background-image: linear-gradient(315deg, #abe9cd 0%, #3eadcf 74%);
+}
+
+.game-page-container {
+  background-color: #abe9cd;
 }
 
 .home-page-header {
@@ -59,32 +72,49 @@ select {
   height: 55px;
   padding-top: 20px;
   text-align: center;
-  background-color: #4dccc6;
   background-image: linear-gradient(315deg, #4dccc6 100%, #96e4df 74%);
 }
+.game-header {
+  padding-top: 20px;
+  text-align: center;
+}
 
-.page-main {
-  width: 90%;
+.player-section,
+.settings-section {
   display: flex;
   flex-direction: row;
-}
-.play-section,
-.settings-section {
-  padding: 10px;
-  width: 50%;
-  margin: 2rem;
+  width: 100%;
   align-items: center;
-  display: flex;
-  flex-direction: column;
+}
+
+.host-player,
+.guest-player,
+.host-settings,
+.guest-settings,
+.rules-settings {
+  padding: 30px;
+  margin: 2rem;
+  text-align: center;
   background-color: #d3d6db;
   border: 1px solid #d3d6db;
   border-radius: 5px;
+  width: 50%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.host-settings,
+.guest-settings,
+.rules-settings {
+  height: 520px;
+  justify-content: flex-start;
 }
 
-.home-page {
-  width: 90%;
-  text-align: center;
+.container {
+  margin: 30px;
 }
+/* ------------- */
 
 /* inputs */
 .input-control {
@@ -92,11 +122,23 @@ select {
   display: flex;
   width: 100%;
 }
+.host-input-control,
+.guest-input-control {
+  height: 125px;
+  justify-content: space-between;
+}
+
 .input-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 20px;
+}
+.container {
+  margin: 20px 0px 20px 0px;
+}
+
+.padLeftt20 {
+  padding-left: 20px;
 }
 
 /* avatar */
@@ -111,18 +153,19 @@ select {
   border: 1px solid #404040;
   border-radius: 10px;
   background-color: #ffffff;
-  margin-top: 1rem;
+  padding: 5px;
 }
 
 .btn-avatar {
   margin-top: 5px;
+  height: 30px;
   border: 1px solid #404040;
   background-color: yellow;
 }
 
 /* buttons */
 .btn {
-  margin-top: 1rem;
+  margin-top: auto;
   width: 100%;
   height: 40px;
   background-color: #2e94b9;
@@ -134,39 +177,49 @@ select {
   border-radius: 5px;
 }
 
-/* separator */
-.separator {
-  margin-top: 30px;
-  margin-bottom: 30px;
+/*------------------ separator-------------- */
+.player-separator {
+  color: #ffffff;
 }
-
+/* ---------------settings page ----------------- */
 .settings-section-display {
   display: none;
   width: 100%;
 }
-.host-settings,
-.guest-settings {
-  margin-top: 30px;
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .players {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 .player-id {
   list-style-type: none;
-  margin: 0px;
+  margin: 0px 30px 20px 0px;
   overflow-wrap: break-word;
-  width: 130px;
 }
 .player-name,
 .player-card {
-  margin: 5px;
+  margin: 2px;
 }
 .player-isHost {
-  margin: 15px;
+  margin: 5px;
+}
+.max-player-select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.marginTop20 {
+  margin-top: 20px;
 }
 
-/* game rules */
+/*-----------------  game rules--------------------------- */
+
 .rules-section {
   padding: 10px;
   width: 50%;
@@ -194,18 +247,15 @@ select {
   text-align: left;
 }
 
-.game-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  justify-content: space-between;
-  background-color: lightcyan;
-}
+/*----------------- game page--------------------------- */
 
 /* header */
 .game-header {
   margin: 0;
+}
+.btn-end {
+  width: 140px;
+  margin: 0px 30px 0px 0px;
 }
 .players-list {
   display: flex;
@@ -213,17 +263,17 @@ select {
   margin: 0;
   padding: 0;
 }
-.player-id {
+/* .player-id {
   list-style-type: none;
   text-align: center;
   margin: 10px;
-}
-.img-avatar {
+} */
+/* .img-avatar {
   border: 1px solid #404040;
   border-radius: 10px;
   background-color: #ffffff;
   padding: 5px;
-}
+} */
 
 /* set game button icon */
 .hand-circle {
@@ -244,61 +294,64 @@ select {
   height: 150px;
   /* position: absolute; */
 }
-#img-active {
-  animation: fadeIn 2s forwards;
-  -moz-animation: fadeIn 4s; /* Firefox */
-  -webkit-animation: fadeIn 4s; /* Safari and Chrome */
-  -o-animation: fadeIn 4s; /* Opera */
+.img-hand:active {
+  animation: fadeIn 0.1s;
+  -moz-animation: fadeIn 0.1s; /* Firefox */
+  -webkit-animation: fadeIn 0.1s; /* Safari and Chrome */
+  -o-animation: fadeIn 0.1s; /* Opera */
 }
 @keyframes fadeIn {
   from {
     opacity: 1;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
+    border-top: 1px solid red;
+    /* transform: rotate(45deg); */
+    transform-origin: 0% 0%;
   }
   to {
     opacity: 1;
-    width: 180px;
-    height: 180px;
+    width: 80px;
+    height: 80px;
   }
 }
 @-moz-keyframes fadeIn {
   /* Firefox */
   from {
     opacity: 1;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
   }
   to {
     opacity: 1;
-    width: 180px;
-    height: 180px;
+    width: 80px;
+    height: 80px;
   }
 }
 @-webkit-keyframes fadeIn {
   /* Safari and Chrome */
   from {
     opacity: 1;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
   }
   to {
     opacity: 1;
-    width: 180px;
-    height: 180px;
+    width: 80px;
+    height: 80px;
   }
 }
 @-o-keyframes fadeIn {
   /* Opera */
   from {
     opacity: 1;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
   }
   to {
     opacity: 1;
-    width: 180px;
-    height: 180px;
+    width: 80px;
+    height: 80px;
   }
 }
 
@@ -309,25 +362,30 @@ select {
 }
 .card {
   display: flex;
-  flex-direction: column;
   margin: 15px;
-}
-.card--active {
-  /* border: 2px solid #d21; */
+  flex-direction: column;
+  width: 200px;
+  height: 220px;
+  background: #ffffff;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
   border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+  padding: 5px;
+}
+
+.isInActiveCard {
+  border: 2px solid #404040;
+}
+.isActiveCard {
+  border: 2px solid #dd1d21;
 }
 .card-name {
-  /* margin: 90px 75px; */
-  /* display: none; */
-  z-index: 100;
-  position: fixed;
   font-size: 20px;
   font-weight: bold;
-  width: 180px;
-  margin-top: 90px;
-  margin-left: 10px;
-  text-align: center;
-  overflow-wrap: break-word;
 }
 
 .row-box {
@@ -341,7 +399,6 @@ select {
   width: 100px;
   height: 100px;
   background: #abc7c9;
-  border: 2px solid #404040;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.07);
   overflow: hidden;
   border-radius: 4px;
@@ -489,8 +546,11 @@ select {
 .user-name {
   margin-left: 20px;
 }
+.isPlayer-active {
+  box-shadow: 0px 0px 25px 5px #ff0e0e;
+}
 
-.btn {
+/* .btn {
   margin-right: 2rem;
   width: 100px;
   height: 40px;
@@ -501,7 +561,7 @@ select {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border: 1px solid #2e94b9;
   border-radius: 5px;
-}
+} */
 
 /* Winner page */
 
@@ -545,4 +605,9 @@ select {
 }
 .points-table {
   width: 40%;
+}
+
+/* display hide */
+.display-hide {
+  display: none;
 }

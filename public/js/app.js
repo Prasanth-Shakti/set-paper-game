@@ -1,22 +1,24 @@
 const socket = io();
 
-// const btnReJoin = document.querySelector(".btn-rejoin");
-// btnReJoin.addEventListener("click", function (e) {
-//   window.location.href = "./index.html";
-// });
+const hostPlayerNameEl = document.getElementById("hostPlayerName");
+const hostCardNameEl = document.getElementById("hostCardName");
+const guestPlayerNameEl = document.getElementById("guestPlayerName");
+const guestCardNameEl = document.getElementById("guestCardName");
+const gameIDEl = document.getElementById("gameID");
+const playerAvatarEl = document.querySelectorAll(".player-avatar");
 
-const playerInput = document.getElementById("name");
-const cardInput = document.getElementById("cardName");
-const guestPlayerInput = document.getElementById("guest-name");
-const guestCardInput = document.getElementById("guest-cardName");
-const guestGameIDInput = document.getElementById("guest-gameID");
 const btnHost = document.querySelector(".btn-host");
 const btnJoin = document.querySelector(".btn-join");
-const playGame = document.querySelectorAll(".play-game");
-const settingsDisplay = document.querySelectorAll(".settings-section-display");
-const guestSettings = document.querySelector(".guest-settings");
 const btnAvatar = document.querySelectorAll(".btn-avatar");
-const imageAvatar = document.querySelectorAll(".player-avatar");
+const btnStart = document.getElementById("btn-start");
+const btnEnd = document.querySelector(".btn-end");
+const btnHand = document.querySelector(".hand-circle");
+
+const playerSectionEl = document.querySelector(".player-section");
+const hostSettingsEl = document.querySelector(".host-settings");
+const guestSettingsEl = document.querySelector(".guest-settings");
+const rulesSettingsEl = document.querySelector(".rules-settings");
+
 const hostImage = document.getElementById("host-img");
 const guestImage = document.getElementById("guest-img");
 const numPlayers = document.querySelectorAll(".players-joined");
@@ -24,98 +26,105 @@ const playersList = document.querySelectorAll(".players");
 const gameRoom = document.querySelector(".game-room");
 const maxPlayersSelectEl = document.getElementById("select-max-players");
 const maxPlayersEl = document.querySelector(".max-players");
-const btnStart = document.getElementById("btn-start");
+
+const homePageEl = document.querySelector(".home-page-container");
+const gamePageEl = document.querySelector(".game-page-container");
 const otherPlayersEl = document.getElementById("other-players");
 const currentPlayerEl = document.querySelector(".user");
 const cardListEl = document.querySelector(".card-list");
+const playerMessageEl = document.querySelector(".user-info");
+const handImageEl = document.querySelector(".img-hand");
 const URL = "https://avataaars.io";
 
-if (!window.location.href.includes("game")) {
-  //Create Room------
-  btnHost.addEventListener("click", function () {
-    const playerName = playerInput.value;
-    const cardName = cardInput.value;
-    const playerImage = hostImage.src;
-    socket.emit("createRoom", { playerName, cardName, playerImage });
+//Avatar creation ------
+btnAvatar.forEach((element) => {
+  element.addEventListener("click", function () {
+    socket.emit("createAvatar", URL);
   });
+});
 
-  socket.on("gameCreated", function () {
-    playGame.forEach((query) => {
-      return (query.style.display = "none");
-    });
-    settingsDisplay.forEach((element) => {
-      element.innerHTML.includes("host-settings")
-        ? (element.style.display = "flex")
-        : "";
-    });
+socket.on("avatarCreated", function (url) {
+  playerAvatarEl.forEach((element) => {
+    element.src = url;
   });
-  //------
+});
+//-------
 
-  //Join Room--------
-  btnJoin.addEventListener("click", function () {
-    const playerName = guestPlayerInput.value;
-    const cardName = guestCardInput.value;
-    const gameID = guestGameIDInput.value;
-    const playerImage = guestImage.src;
-    const maxPlayers = +maxPlayersSelectEl.selectedOptions[0].value;
-    socket.emit("joinRoom", {
-      playerName,
-      cardName,
-      gameID,
-      playerImage,
-      maxPlayers,
-    });
+//maxplayers change
+maxPlayersSelectEl.addEventListener("change", function () {
+  const maxPlayers = maxPlayersSelectEl.value;
+  socket.emit("changeMaxPlayers", maxPlayers);
+});
+
+socket.on("maxPlayersChanged", function (num) {
+  maxPlayersEl.innerHTML = `<h4>Max Players : ${num}</h4>`;
+});
+
+//Create Room------
+btnHost.addEventListener("click", function () {
+  const playerName = hostPlayerNameEl.value;
+  const cardName = hostCardNameEl.value;
+  const playerImage = hostImage.src;
+  socket.emit("createRoom", { playerName, cardName, playerImage });
+});
+
+socket.on("gameCreated", function () {
+  playerSectionEl.classList.add("display-hide");
+  hostSettingsEl.classList.remove("display-hide");
+  rulesSettingsEl.classList.remove("display-hide");
+});
+//------
+
+//Join Room--------
+btnJoin.addEventListener("click", function () {
+  const playerName = guestPlayerNameEl.value;
+  const cardName = guestCardNameEl.value;
+  const gameID = gameIDEl.value;
+  const playerImage = guestImage.src;
+  const maxPlayers =
+    +maxPlayersSelectEl.options[maxPlayersSelectEl.selectedIndex].value;
+  socket.emit("joinRoom", {
+    playerName,
+    cardName,
+    gameID,
+    playerImage,
+    maxPlayers,
   });
+});
 
-  socket.on("guestJoined", function () {
-    playGame.forEach((query) => {
-      return (query.style.display = "none");
-    });
-    settingsDisplay.forEach((element) => {
-      element.innerHTML.includes("guest-settings")
-        ? (element.style.display = "flex")
-        : "";
-    });
+socket.on("guestJoined", function () {
+  playerSectionEl.classList.add("display-hide");
+  guestSettingsEl.classList.remove("display-hide");
+  rulesSettingsEl.classList.remove("display-hide");
+});
+
+socket.on("errorMessage", function (message) {
+  alert(message);
+});
+//--------
+
+//Get room users
+socket.on("roomplayers", ({ gameID, players }) => {
+  localStorage.clear();
+  localStorage.setItem("gameID", gameID);
+  outputGameID(gameID);
+  outputPlayers(players);
+});
+
+function outputGameID(gameID) {
+  gameRoom.innerHTML = `<h2>Game ID : ${gameID}</h2>`;
+}
+
+function outputPlayers(players) {
+  console.log(players);
+  numPlayers.forEach((element) => {
+    element.innerHTML = ` <h4>Players Joined : ${players.length}</h4>`;
   });
-
-  socket.on("errorMessage", function (message) {
-    alert(message);
-  });
-  //--------
-
-  //Avatar creation ------
-  btnAvatar.forEach((element) => {
-    element.addEventListener("click", function () {
-      socket.emit("createAvatar", URL);
-    });
-  });
-
-  socket.on("avatarCreated", function (url) {
-    imageAvatar.forEach((element) => {
-      element.src = url;
-    });
-  });
-  //-------
-  //Get room users
-  socket.on("roomplayers", ({ gameID, players }) => {
-    outputGameID(gameID);
-    outputPlayers(players);
-  });
-
-  function outputGameID(gameID) {
-    gameRoom.innerHTML = `<h3>Game ID : ${gameID}</h3>`;
-  }
-
-  function outputPlayers(players) {
-    console.log(players);
-    numPlayers.forEach((element) => {
-      element.innerHTML = ` <h4>Players Joined : ${players.length}</h4>`;
-    });
-    playersList.forEach(
-      (element) =>
-        (element.innerHTML = players
-          .map(
-            (player) => `
+  playersList.forEach(
+    (element) =>
+      (element.innerHTML = players
+        .map(
+          (player) => `
       <li class="player-id">
     <img
       src=${player.playerImage}
@@ -128,31 +137,61 @@ if (!window.location.href.includes("game")) {
     <p class="player-card">Card : ${player.cardName}</p> 
     <p class="player-isHost">${player.host ? `(Host)` : ``}</p>
   </li>`
-          )
-          .join(""))
-    );
-  }
-
-  //maxplayers change
-  maxPlayersSelectEl.addEventListener("change", function () {
-    const maxPlayers = maxPlayersSelectEl.value;
-    socket.emit("changeMaxPlayers", maxPlayers);
-  });
-
-  socket.on("maxPlayersChanged", function (num) {
-    maxPlayersEl.innerHTML = `<h4>Max Players : ${num}</h4>`;
-  });
-
-  //Start Game
-  btnStart.addEventListener("click", function () {
-    const nextPage = "./game.html";
-    socket.emit("startGame", nextPage);
-  });
+        )
+        .join(""))
+  );
 }
 
-socket.on("gameStarted", function (allPlayers) {
-  const { players, currentPlayer, otherPlayers } = allPlayers;
+//Start Game
+btnStart.addEventListener("click", function () {
+  const gameID = localStorage.getItem("gameID");
+  socket.emit("startGame", gameID);
+});
+
+socket.on("gameStarting", function () {
+  homePageEl.classList.add("display-hide");
+  gamePageEl.classList.remove("display-hide");
+  socket.emit("getPlayerDetails", socket.id);
+});
+
+socket.on("playerdetails", function (allPlayers) {
+  const { currentPlayer, otherPlayers } = allPlayers;
   console.log(currentPlayer, otherPlayers);
+  outputOtherGamePlayers(otherPlayers);
+  outputCurrentPlayer(currentPlayer);
+  displayCurrentPlayerCards(currentPlayer);
+});
+
+function displayCurrentPlayerCards(currentPlayer) {
+  cardListEl.innerHTML = currentPlayer.cards.map(
+    (element, i) => `
+    <div class="card isInActiveCard" data-isactive = "${currentPlayer.isActive}">
+      <p class="card-name">${element}</p>
+    </div>`
+  );
+}
+
+function outputCurrentPlayer(currentPlayer) {
+  currentPlayerEl.innerHTML = `
+  <img
+  src=${currentPlayer.playerImage}
+  alt="avatar"
+  width="70"
+  height="70"
+  class ="${
+    currentPlayer.isActive === true
+      ? `img-avatar isPlayer-active`
+      : `img-avatar`
+  }"
+/>
+<p class="user-name">${currentPlayer.playerName}</p>`;
+  !currentPlayer.isActive ? btnEnd.classList.add("display-hide") : "";
+  playerMessageEl.textContent = currentPlayer.isActive
+    ? "Select a card that you want to pass it to next player"
+    : "Please wait for your turn";
+}
+
+function outputOtherGamePlayers(otherPlayers) {
   otherPlayersEl.innerHTML = otherPlayers.map(
     (element) => ` 
   <li class="player-id">
@@ -161,32 +200,38 @@ socket.on("gameStarted", function (allPlayers) {
     alt="avatar"
     width="70"
     height="70"
-    class="img-avatar"
+    class ="${
+      element.isActive === true ? `img-avatar isPlayer-active` : `img-avatar`
+    }"
   />
   <p class="player-name">${element.playerName}</p>
 </li>`
   );
-  currentPlayerEl.innerHTML = `
-  <img
-  src=${currentPlayer.playerImage}
-  alt="avatar"
-  width="70"
-  height="70"
-  class="img-avatar"
-/>
-<p class="user-name">${currentPlayer.playerName}</p>`;
-  cardListEl.innerHTML = currentPlayer.cards.map(
-    (element) => `
-  <div class="card card--active">
-  <div class="row-box">
-    <div class="box"></div>
-    <div class="box"></div>
-  </div>
-  <p class="card-name">${element}</p>
-  <div class="row-box">
-    <div class="box1"></div>
-    <div class="box1"></div>
-  </div>
-</div>`
-  );
+}
+
+cardListEl.addEventListener("click", function (e) {
+  const card = e.target.closest(".card");
+  if (!card) return;
+  const isCardSelected = document.querySelector(".isActiveCard");
+  if (
+    card.dataset.isactive === "true" &&
+    (isCardSelected === null
+      ? true
+      : false || card.classList.value === isCardSelected?.classList.value)
+  ) {
+    card.classList.toggle("isInActiveCard");
+    card.classList.toggle("isActiveCard");
+  }
+});
+
+btnEnd.addEventListener("click", function () {
+  const cardSelected = document.querySelector(".isActiveCard");
+  const cardText = cardSelected.innerText;
+  const socketId = socket.id;
+  const gameID = localStorage.getItem("gameID");
+  socket.emit("passCard", { socketId, gameID, cardText });
+});
+
+btnHand.addEventListener("click", function () {
+  handImageEl.classList.add("hand-circle-active");
 });

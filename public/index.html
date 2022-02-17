@@ -11,104 +11,109 @@
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <div class="home-page-container">
+    <!-- home page includes player section, settings section , rules -->
+    <div class="home-page-container display-hide">
       <div class="home-page-header">
         <h1>CLASSIC SET PAPER GAME</h1>
       </div>
-      <div class="page-main">
-        <div class="play-section play-game">
-          <!-- host game -->
 
-          <div class="home-page">
-            <h3>--- Host ---</h3>
-            <div class="input-container">
-              <div class="input-control">
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Enter a player name"
-                />
-                <input
-                  type="text"
-                  name="cardName"
-                  id="cardName"
-                  placeholder="Enter a card name"
-                />
-              </div>
-              <div class="avatar">
-                <img
-                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
-                  alt="avatar"
-                  width="70"
-                  height="70"
-                  class="img-avatar player-avatar"
-                  id="host-img"
-                />
-                <button class="btn-avatar">Random</button>
-              </div>
-            </div>
-
-            <button class="btn btn-host" id="btn-host">Host New Game</button>
-          </div>
-          <span class="separator">OR</span>
-
-          <!-- Guest Game -->
-
-          <div class="home-page">
-            <h3>--- Guest ---</h3>
-            <div class="input-container">
-              <div class="input-control">
-                <input
-                  type="text"
-                  name="guest-name"
-                  id="guest-name"
-                  placeholder="Enter a player name"
-                  required
-                />
-
-                <input
-                  type="text"
-                  name="guest-cardName"
-                  id="guest-cardName"
-                  placeholder="Enter a card name"
-                  required
-                />
-              </div>
-              <div class="avatar">
-                <img
-                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
-                  alt="avatar"
-                  width="70"
-                  height="70"
-                  id="guest-img"
-                  class="img-avatar player-avatar"
-                />
-                <button class="btn-avatar">Random</button>
-              </div>
-            </div>
-
-            <div class="input-control">
+      <div class="player-section">
+        <!-- host game -->
+        <div class="host-player">
+          <h3>--- Host ---</h3>
+          <div class="input-container container">
+            <div class="input-control host-input-control">
               <input
                 type="text"
-                name="guest-gameID"
-                id="guest-gameID"
-                placeholder="Enter Game ID"
-                required
+                name="hostPlayerName"
+                id="hostPlayerName"
+                placeholder="Enter a player name"
+              />
+
+              <input
+                type="text"
+                name="hostCardName"
+                id="hostCardName"
+                placeholder="Enter a card name"
               />
             </div>
-            <button type="submit" class="btn btn-join">Join Game</button>
+            <div class="avatar">
+              <img
+                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                alt="avatar"
+                width="110"
+                height="110"
+                class="img-avatar player-avatar"
+                id="host-img"
+              />
+              <button class="btn-avatar">Random</button>
+            </div>
           </div>
+
+          <button class="btn btn-host">Host New Game</button>
         </div>
-        <!-- host settings page-->
-        <div class="settings-section settings-section-display">
-          <div class="home-page host-settings">
-            <div class="input-container game-room">
-              <h3>Game ID : 34534-34534</h3>
+        <!-- separator -->
+        <span class="player-separator">OR</span>
+        <!-- Guest Game -->
+        <div class="guest-player">
+          <h3>--- Guest ---</h3>
+          <div class="container">
+            <div class="input-container container">
+              <div class="input-control">
+                <input
+                  type="text"
+                  name="gameID"
+                  id="gameID"
+                  placeholder="Enter Game ID"
+                  required
+                />
+              </div>
             </div>
             <div class="input-container">
+              <div class="input-control guest-input-control">
+                <input
+                  type="text"
+                  name="guestPlayerName"
+                  id="guestPlayerName"
+                  placeholder="Enter a player name"
+                  required
+                />
+
+                <input
+                  type="text"
+                  name="guestCardName"
+                  id="guestCardName"
+                  placeholder="Enter a card name"
+                  required
+                />
+              </div>
+              <div class="avatar">
+                <img
+                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                  alt="avatar"
+                  width="110"
+                  height="110"
+                  class="img-avatar player-avatar"
+                  id="guest-img"
+                />
+                <button class="btn-avatar">Random</button>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-join">Join Game</button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <!-- host settings page-->
+        <div class="host-settings display-hide">
+          <div class="settings-container">
+            <div class="game-room">
+              <h2>Game ID : 34534-34534</h2>
+            </div>
+            <div class="max-player-select marginTop20">
               <h4>Max Players</h4>
-              <div class="input-control">
+              <div class="padLeftt20">
                 <select name="room" id="select-max-players">
                   <option value="3">3</option>
                   <option value="4">4</option>
@@ -121,58 +126,31 @@
                 </select>
               </div>
             </div>
-            <div class="players-list">
-              <div class="input-container players-joined">
-                <h4>Players Joined : 4</h4>
-              </div>
-              <ul class="players players-host">
-                <li class="player-id">
-                  <img
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
-                    alt="avatar"
-                    width="70"
-                    height="70"
-                    class="img-avatar"
-                  />
-                  <p class="player-name">Player 1</p>
-                  <p class="player-card">Card : Apple</p>
-                </li>
-              </ul>
-              <button class="btn btn-start" id="btn-start">Start Game</button>
+            <div class="players-joined marginTop20">
+              <h4>Players Joined : 4</h4>
             </div>
           </div>
-        </div>
 
+          <ul class="players"></ul>
+          <button class="btn btn-start" id="btn-start">Start Game</button>
+        </div>
         <!-- Guest settings -->
-        <div class="settings-section settings-section-display">
-          <div class="home-page guest-settings">
-            <h3 id="wait">Please wait for host to start the game ...</h3>
-            <div class="input-container max-players">
+        <div class="guest-settings display-hide">
+          <div class="settings-container">
+            <h2>Please wait for host to start the game ...</h2>
+            <div class="max-player-limit marginTop20">
               <h4>Max Players : 3</h4>
             </div>
-
-            <div class="players-list">
-              <div class="input-container players-joined">
-                <h4>Players Joined : 4</h4>
-              </div>
-              <ul class="players">
-                <li class="player-id">
-                  <img
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
-                    alt="avatar"
-                    width="70"
-                    height="70"
-                    class="img-avatar"
-                  />
-                  <p class="player-name">Player 1</p>
-                  <p class="player-card">Card : Apple</p>
-                </li>
-              </ul>
+            <div class="players-joined marginTop20">
+              <h4>Players Joined : 4</h4>
             </div>
+          </div>
+          <div>
+            <ul class="players"></ul>
           </div>
         </div>
         <!-- rules for the game -->
-        <div class="rules-section play-game">
+        <div class="rules-settings display-hide">
           <div class="home-page">
             <div class="rules-header">
               <svg
@@ -472,32 +450,10 @@
         </div>
       </div>
     </div>
-    <div class="game-container">
+    <!-- play game  -->
+    <div class="game-page-container">
       <div class="game-header">
-        <ul id="other-players" class="players-list">
-          <ul id="players" class="players-list">
-            <li class="player-id">
-              <img
-                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
-                alt="avatar"
-                width="70"
-                height="70"
-                class="img-avatar"
-              />
-              <p class="player-name">Player 1</p>
-            </li>
-            <li class="player-id">
-              <img
-                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Kurt&hairColor=Red&facialHairType=BeardLight&facialHairColor=Black&clotheType=CollarSweater&clotheColor=Gray02&eyeType=Happy&eyebrowType=FlatNatural&mouthType=Tongue&skinColor=Tanned"
-                alt="avatar"
-                width="70"
-                height="70"
-                class="img-avatar"
-              />
-              <p class="player-name">Player 2</p>
-            </li>
-          </ul>
-        </ul>
+        <ul id="other-players" class="players-list"></ul>
       </div>
       <button class="hand-circle">
         <!-- <p class="set-game">SET</p> -->
@@ -510,47 +466,29 @@
         />
       </button>
       <div class="card-list">
-        <div class="card card--active">
-          <div class="row-box">
-            <div class="box"></div>
-            <div class="box"></div>
-          </div>
+        <div class="card isInActiveCard">
           <p class="card-name">Apple</p>
-          <div class="row-box">
-            <div class="box1"></div>
-            <div class="box1"></div>
-          </div>
         </div>
-        <div class="card card--active">
-          <div class="row-box">
-            <div class="box"></div>
-            <div class="box"></div>
-          </div>
+        <div class="card isInActiveCard">
           <p class="card-name">Apple</p>
-          <div class="row-box">
-            <div class="box1"></div>
-            <div class="box1"></div>
-          </div>
+        </div>
+        <div class="card isInActiveCard">
+          <p class="card-name">Apple</p>
+        </div>
+        <div class="card isInActiveCard">
+          <p class="card-name">Apple</p>
         </div>
       </div>
       <h4 class="user-info">
         Select a card that you want to pass it to next player
       </h4>
       <div class="game-footer">
-        <div class="user">
-          <img
-            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
-            alt="avatar"
-            width="70"
-            height="70"
-            class="img-avatar"
-          />
-          <p class="user-name">Player name</p>
-        </div>
+        <div class="user"></div>
         <button class="btn btn-end">End Turn</button>
       </div>
     </div>
-    <div class="winner-container" hidden>
+    <!-- result page -->
+    <div class="result-page-container" hidden>
       <div class="winner-main">
         <p class="winner-text">Player 2 is the winner!!!</p>
         <div class="points">

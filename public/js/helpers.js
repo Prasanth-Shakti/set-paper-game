@@ -1,4 +1,5 @@
 const players = [];
+const shuffledPlayers = [];
 let totalCards = [];
 const {
   avatarStyle,
@@ -24,28 +25,63 @@ const playerJoin = function (
   cardName,
   playerImage,
   gameID,
-  host = false
+  host = false,
+  isActive = false
 ) {
-  const player = { id, playerName, cardName, playerImage, gameID, host };
+  const player = {
+    id,
+    playerName,
+    cardName,
+    playerImage,
+    gameID,
+    host,
+    isActive,
+  };
 
   players.push(player);
   // console.log(players);
   return player;
 };
 
+// player leaves game
+function playerLeave(id) {
+  const index = players.findIndex((player) => player.id === id);
+
+  if (index !== -1) {
+    return players.splice(index, 1)[0];
+  }
+}
+
 // Get room players
 function getRoomPlayers(gameID) {
   return players.filter((player) => player.gameID === gameID);
 }
+//shuffled players
+const getShuffledPlayers = function (gameID) {
+  assignCardToPlayers(gameID);
+  const roomplayers = getRoomPlayers(gameID);
+  for (let i = roomplayers.length - 1; i > 0; i--) {
+    const random = Math.floor(Math.random() * (i + 1));
+    [roomplayers[i], roomplayers[random]] = [
+      roomplayers[random],
+      roomplayers[i],
+    ];
+  }
+  roomplayers[0].isActive = true;
+  roomplayers.forEach((player) => shuffledPlayers.push(player));
+  return roomplayers;
+};
 
 //Get current player
 function getCurrentPlayer(id) {
-  return players.find((player) => player.id === id);
+  return shuffledPlayers.find((player) => player.id === id);
 }
 
 function getOtherPlayers(id) {
-  return players.filter((player) => player.id !== id);
+  return shuffledPlayers.filter((player) => player.id !== id);
 }
+
+function updateCards(gameID) {}
 
 const generateGameCards = function (gameID) {
   const roomplayers = getRoomPlayers(gameID);
@@ -79,19 +115,6 @@ const generateRandomElementFromArray = function () {
   totalCards.splice(random, 1);
 
   return randomEl;
-};
-
-const getShuffledPlayers = function (gameID) {
-  assignCardToPlayers(gameID);
-  const roomplayers = getRoomPlayers(gameID);
-  for (let i = roomplayers.length - 1; i > 0; i--) {
-    const random = Math.floor(Math.random() * (i + 1));
-    [roomplayers[i], roomplayers[random]] = [
-      roomplayers[random],
-      roomplayers[i],
-    ];
-  }
-  return roomplayers;
 };
 
 const generateGameID = function () {
@@ -137,4 +160,5 @@ module.exports = {
   getOtherPlayers,
   assignCardToPlayers,
   getShuffledPlayers,
+  playerLeave,
 };

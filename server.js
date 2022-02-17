@@ -12,6 +12,7 @@ const {
   getOtherPlayers,
   assignCardToPlayers,
   getShuffledPlayers,
+  playerLeave,
 } = require("./public/js/helpers");
 
 const app = express();
@@ -74,27 +75,49 @@ io.on("connection", (socket) => {
     const avatar = generateAvatar(url);
     socket.emit("avatarCreated", avatar);
   });
-  socket.on("changeMaxPlayers", (num) => {
-    const player = getCurrentPlayer(socket.id);
-    socket.broadcast.to(player.gameID).emit("maxPlayersChanged", num);
+  // socket.on("changeMaxPlayers", (num) => {
+  //   const player = getCurrentPlayer(socket.id);
+  //   socket.broadcast.to(player.gameID).emit("maxPlayersChanged", num);
+  // });
+
+  socket.on("startGame", (gameID) => {
+    const shuffledPlayers = getShuffledPlayers(gameID);
+    console.log(shuffledPlayers);
+    io.to(gameID).emit("gameStarting");
   });
 
-  socket.on("startGame", (nextPage) => {
-    // window.location.href = nextPage;
+  socket.on("getPlayerDetails", (id) => {
     // currentplayer
-    const currentPlayer = getCurrentPlayer(socket.id);
-
+    const currentPlayer = getCurrentPlayer(id);
     // const otherPlayers = players -currentPlayer
-    const otherPlayers = getOtherPlayers(socket.id);
-
+    const otherPlayers = getOtherPlayers(id);
     // assign cards to all players and shuffle
-    const shuffledPlayers = getShuffledPlayers(currentPlayer.gameID);
 
-    io.to(currentPlayer.gameID).emit("gameStarted", {
-      shuffledPlayers,
+    socket.emit("playerdetails", {
       currentPlayer,
       otherPlayers,
     });
+  });
+
+  socket.on("passCard", (cardDetails) => {
+    const { socketId, gameID, cardText } = cardDetails;
+    console.log(socketId, gameID, cardText);
+  });
+
+  //Runs when client disconnects
+  socket.on("disconnect", () => {
+    const player = playerLeave(socket.id);
+    if (player) {
+      // io.to(player.gameID).emit(
+      //   "message",
+      //   formatMessage(botName, `${player.username} has left the chat`)
+      // );
+      // send users joined the room and room info
+      io.to(player.gameID).emit("gameRoomPlayers", {
+        gameID: player.gameID,
+        players: getRoomPlayers(player.gameID),
+      });
+    }
   });
 });
 

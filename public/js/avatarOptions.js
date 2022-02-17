@@ -186,6 +186,7 @@ const hatColorArray = [
   "Red",
   "White",
 ];
+
 module.exports = {
   avatarStyle,
   topTypeArray,
