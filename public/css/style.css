@@ -305,9 +305,6 @@ select {
     opacity: 1;
     width: 150px;
     height: 150px;
-    border-top: 1px solid red;
-    /* transform: rotate(45deg); */
-    transform-origin: 0% 0%;
   }
   to {
     opacity: 1;
@@ -525,9 +522,6 @@ select {
 }
 
 /* game footer includes current player and end turn */
-.user-info {
-  /* display: none; */
-}
 .game-footer {
   display: flex;
   flex-direction: row;

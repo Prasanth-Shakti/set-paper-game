@@ -154,12 +154,18 @@ socket.on("gameStarting", function () {
   socket.emit("getPlayerDetails", socket.id);
 });
 
-socket.on("playerdetails", function (allPlayers) {
+//update PlayerDetails
+socket.on("updatePlayerDetails", function (allPlayers) {
   const { currentPlayer, otherPlayers } = allPlayers;
   console.log(currentPlayer, otherPlayers);
   outputOtherGamePlayers(otherPlayers);
   outputCurrentPlayer(currentPlayer);
   displayCurrentPlayerCards(currentPlayer);
+  const sameCardsSet = currentPlayer.cards.reduce((acc, card, index, arr) => {
+    if (card === arr[0] || card === arr[1]) return acc++;
+    return;
+  }, 0);
+  // if(sameCardsSet === 4)
 });
 
 function displayCurrentPlayerCards(currentPlayer) {
@@ -185,7 +191,9 @@ function outputCurrentPlayer(currentPlayer) {
   }"
 />
 <p class="user-name">${currentPlayer.playerName}</p>`;
-  !currentPlayer.isActive ? btnEnd.classList.add("display-hide") : "";
+  currentPlayer.isActive
+    ? btnEnd.classList.remove("display-hide")
+    : btnEnd.classList.add("display-hide");
   playerMessageEl.textContent = currentPlayer.isActive
     ? "Select a card that you want to pass it to next player"
     : "Please wait for your turn";
@@ -230,6 +238,10 @@ btnEnd.addEventListener("click", function () {
   const socketId = socket.id;
   const gameID = localStorage.getItem("gameID");
   socket.emit("passCard", { socketId, gameID, cardText });
+});
+
+socket.on("cardPassedSuccessfully", function () {
+  socket.emit("getPlayerDetails", socket.id);
 });
 
 btnHand.addEventListener("click", function () {

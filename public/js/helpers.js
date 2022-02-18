@@ -53,8 +53,9 @@ function playerLeave(id) {
 }
 
 // Get room players
-function getRoomPlayers(gameID) {
-  return players.filter((player) => player.gameID === gameID);
+function getRoomPlayers(gameID, shuffled = false) {
+  if (!shuffled) return players.filter((player) => player.gameID === gameID);
+  return shuffledPlayers.filter((player) => player.gameID === gameID);
 }
 //shuffled players
 const getShuffledPlayers = function (gameID) {
@@ -72,6 +73,24 @@ const getShuffledPlayers = function (gameID) {
   return roomplayers;
 };
 
+function passCardToNextPlayer(cardDetails) {
+  const { socketId, gameID, cardText } = cardDetails;
+  const roomPlayers = getRoomPlayers(gameID, true);
+  roomPlayers.map((player, index, arr) => {
+    if (player.id === socketId) {
+      player.isActive = false;
+      const cardIndex = player.cards.findIndex((card) => card === cardText);
+      player.cards.splice(cardIndex, 1);
+      const nextPlayer = arr[index + 1] ? arr[index + 1] : arr[0];
+      nextPlayer.isActive = true;
+      nextPlayer.cards.push(cardText);
+      console.log(`--------- player : ${nextPlayer.playerName}`, nextPlayer);
+      return player;
+    }
+  });
+  return roomPlayers;
+}
+
 //Get current player
 function getCurrentPlayer(id) {
   return shuffledPlayers.find((player) => player.id === id);
@@ -80,8 +99,6 @@ function getCurrentPlayer(id) {
 function getOtherPlayers(id) {
   return shuffledPlayers.filter((player) => player.id !== id);
 }
-
-function updateCards(gameID) {}
 
 const generateGameCards = function (gameID) {
   const roomplayers = getRoomPlayers(gameID);
@@ -161,4 +178,5 @@ module.exports = {
   assignCardToPlayers,
   getShuffledPlayers,
   playerLeave,
+  passCardToNextPlayer,
 };

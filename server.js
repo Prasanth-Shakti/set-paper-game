@@ -13,6 +13,7 @@ const {
   assignCardToPlayers,
   getShuffledPlayers,
   playerLeave,
+  passCardToNextPlayer,
 } = require("./public/js/helpers");
 
 const app = express();
@@ -81,8 +82,9 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("startGame", (gameID) => {
-    const shuffledPlayers = getShuffledPlayers(gameID);
-    console.log(shuffledPlayers);
+    // assign cards to all players and shuffle
+    getShuffledPlayers(gameID);
+
     io.to(gameID).emit("gameStarting");
   });
 
@@ -91,17 +93,18 @@ io.on("connection", (socket) => {
     const currentPlayer = getCurrentPlayer(id);
     // const otherPlayers = players -currentPlayer
     const otherPlayers = getOtherPlayers(id);
-    // assign cards to all players and shuffle
 
-    socket.emit("playerdetails", {
+    socket.emit("updatePlayerDetails", {
       currentPlayer,
       otherPlayers,
     });
   });
 
   socket.on("passCard", (cardDetails) => {
-    const { socketId, gameID, cardText } = cardDetails;
-    console.log(socketId, gameID, cardText);
+    const { gameID } = cardDetails;
+    const roomPlayers = passCardToNextPlayer(cardDetails);
+    console.log("roomPlayers:", roomPlayers);
+    io.to(gameID).emit("cardPassedSuccessfully");
   });
 
   //Runs when client disconnects
