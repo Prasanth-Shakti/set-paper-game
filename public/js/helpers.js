@@ -1,6 +1,6 @@
 const players = [];
 const shuffledPlayers = [];
-
+let maxPlayers = 3;
 const pointsTable = [];
 let totalCards = [];
 const {
@@ -161,7 +161,7 @@ const generateGameID = function () {
 };
 
 const generateRandomNumber = function () {
-  return Math.floor(1000 + Math.random() * 1000);
+  return Math.floor(1000 + Math.random() * 9000);
 };
 
 const generateAvatar = function (url) {
@@ -173,11 +173,14 @@ const generateAvatar = function (url) {
   const eyeType = generateRandomAvatarPiece(eyeTypeArray);
   const eyebrowType = generateRandomAvatarPiece(eyebrowTypeArray);
   const facialHairColor = generateRandomAvatarPiece(facialHairColorArray);
-  const facialHairType = generateRandomAvatarPiece(facialHairTypeArray);
+  let facialHairType = generateRandomAvatarPiece(facialHairTypeArray);
   const graphicType = generateRandomAvatarPiece(graphicTypeArray);
   const mouthType = generateRandomAvatarPiece(mouthTypeArray);
   const hatColor = generateRandomAvatarPiece(hatColorArray);
   const skinColor = generateRandomAvatarPiece(skinColorArray);
+  if (topType.includes("LongHair")) {
+    facialHairType = facialHairTypeArray[0];
+  }
   const avatar = `${url}/?avatarStyle=${avatarStyle}&topType=${topType}&accessoriesType=${accessoriesType}&hatColor=${hatColor}&hairColor=${hairColor}&graphicType=${graphicType}&facialHairType=${facialHairType}&facialHairColor=${facialHairColor}&clotheType=${clotheType}&clotheColor=${clotheColor}&eyeType=${eyeType}&eyebrowType=${eyebrowType}&mouthType=${mouthType}&skinColor=${skinColor}`;
   return avatar;
 };
@@ -219,6 +222,14 @@ function getPlayerPoints(gameID) {
   else return false;
 }
 
+function storeMaxPlayers(number) {
+  maxPlayers = number;
+}
+
+function getMaxPlayers() {
+  return maxPlayers;
+}
+
 module.exports = {
   generateGameID,
   playerJoin,
@@ -234,4 +245,6 @@ module.exports = {
   checkCardsMatched,
   addPlayerToPointsTable,
   getPlayerPoints,
+  storeMaxPlayers,
+  getMaxPlayers,
 };

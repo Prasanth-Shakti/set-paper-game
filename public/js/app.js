@@ -25,7 +25,7 @@ const numPlayers = document.querySelectorAll(".players-joined");
 const playersList = document.querySelectorAll(".players");
 const gameRoom = document.querySelector(".game-room");
 const maxPlayersSelectEl = document.getElementById("select-max-players");
-const maxPlayersEl = document.querySelector(".max-players");
+const maxPlayersEl = document.querySelector(".max-player-limit");
 
 const homePageEl = document.querySelector(".home-page-container");
 const gamePageEl = document.querySelector(".game-page-container");
@@ -52,16 +52,6 @@ socket.on("avatarCreated", function (url) {
 });
 //-------
 
-//maxplayers change
-maxPlayersSelectEl.addEventListener("change", function () {
-  const maxPlayers = maxPlayersSelectEl.value;
-  socket.emit("changeMaxPlayers", maxPlayers);
-});
-
-socket.on("maxPlayersChanged", function (num) {
-  maxPlayersEl.innerHTML = `<h4>Max Players : ${num}</h4>`;
-});
-
 //Create Room------
 btnHost.addEventListener("click", function () {
   const playerName = hostPlayerNameEl.value;
@@ -83,14 +73,11 @@ btnJoin.addEventListener("click", function () {
   const cardName = guestCardNameEl.value;
   const gameID = gameIDEl.value;
   const playerImage = guestImage.src;
-  const maxPlayers =
-    +maxPlayersSelectEl.options[maxPlayersSelectEl.selectedIndex].value;
   socket.emit("joinRoom", {
     playerName,
     cardName,
     gameID,
     playerImage,
-    maxPlayers,
   });
 });
 
@@ -106,15 +93,31 @@ socket.on("errorMessage", function (message) {
 //--------
 
 //Get room users
-socket.on("roomplayers", ({ gameID, players }) => {
+socket.on("roomplayers", ({ gameID, players, maxPlayers }) => {
   localStorage.clear();
   localStorage.setItem("gameID", gameID);
   outputGameID(gameID);
   outputPlayers(players);
+  outputMaxPlayers(maxPlayers);
 });
 
+//maxplayers change
+maxPlayersSelectEl.addEventListener("change", function () {
+  const maxPlayers = maxPlayersSelectEl.value;
+  const gameID = localStorage.getItem("gameID");
+  socket.emit("changeMaxPlayers", { gameID, maxPlayers });
+});
+
+socket.on("maxPlayersChanged", function (maxPlayers) {
+  outputMaxPlayers(maxPlayers);
+});
+
+//output functions
 function outputGameID(gameID) {
   gameRoom.innerHTML = `<h2>Game ID : ${gameID}</h2>`;
+}
+function outputMaxPlayers(maxPlayers) {
+  maxPlayersEl.innerHTML = `<h4>Max Players : ${maxPlayers}</h4>`;
 }
 
 function outputPlayers(players) {
@@ -261,15 +264,6 @@ socket.on("cardPassedSuccessfully", function () {
 });
 
 socket.on("waitingPlayerResponse", function (finishedPlayer) {
-  // cardListEl.innerHTML = `<h2 class="game-finish-message"> ${finishedPlayer.playerName} has set the game!! Pressing set button fast to get more points. </h2>`;
-  // playerMessageEl.textContent = "";
-  // const gameID = localStorage.getItem("gameID");
-  // const socketId = socket.id;
-  // btnHand.addEventListener("click", function () {
-  //   handImageEl.classList.add("hand-circle-active");
-  //   socket.emit("completed", { socketId, gameID });
-  //   cardListEl.innerHTML = `<h2 class="game-finish-message"> Waiting for the other players to finish. </h2>`;
-  // });
   outputFinishGame(finishedPlayer);
 });
 

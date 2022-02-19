@@ -53,7 +53,6 @@ const hairColorArray = [
   "Brown",
   "BrownDark",
   "PastelPink",
-  "Blue",
   "Platinum",
   "Red",
   "SilverGray",
