@@ -14,6 +14,9 @@ const {
   getShuffledPlayers,
   playerLeave,
   passCardToNextPlayer,
+  checkCardsMatched,
+  addPlayerToPointsTable,
+  getPlayerPoints,
 } = require("./public/js/helpers");
 
 const app = express();
@@ -94,17 +97,35 @@ io.on("connection", (socket) => {
     // const otherPlayers = players -currentPlayer
     const otherPlayers = getOtherPlayers(id);
 
+    const cardsMatched = checkCardsMatched(id);
+
     socket.emit("updatePlayerDetails", {
       currentPlayer,
       otherPlayers,
+      cardsMatched,
     });
   });
 
   socket.on("passCard", (cardDetails) => {
     const { gameID } = cardDetails;
     const roomPlayers = passCardToNextPlayer(cardDetails);
-    console.log("roomPlayers:", roomPlayers);
+    // console.log("roomPlayers:", roomPlayers);
     io.to(gameID).emit("cardPassedSuccessfully");
+  });
+
+  socket.on("finishGame", (finishPlayer) => {
+    const { socketId, gameID } = finishPlayer;
+    const finishedPlayer = getCurrentPlayer(socketId);
+    addPlayerToPointsTable(finishPlayer);
+    socket.broadcast.to(gameID).emit("waitingPlayerResponse", finishedPlayer);
+  });
+
+  socket.on("completed", (player) => {
+    const { gameID } = player;
+    addPlayerToPointsTable(player);
+    const pointsTable = getPlayerPoints(gameID);
+    console.log(pointsTable);
+    if (pointsTable) io.to(gameID).emit("gamePoints", pointsTable);
   });
 
   //Runs when client disconnects

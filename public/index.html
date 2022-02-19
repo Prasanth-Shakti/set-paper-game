@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Classic Set paper game</title>
     <link rel="stylesheet" href="css/style.css" />
-    <!-- <link rel="stylesheet" href="css/paper.css" /> -->
+
     <script src="js/app.js" defer></script>
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <!-- home page includes player section, settings section , rules -->
-    <div class="home-page-container">
+    <div class="home-page-container ">
       <div class="home-page-header">
         <h1>CLASSIC SET PAPER GAME</h1>
       </div>
@@ -456,7 +456,7 @@
         <ul id="other-players" class="players-list"></ul>
       </div>
       <button class="hand-circle">
-        <!-- <p class="set-game">SET</p> -->
+     
         <img
           src="./img/handIcon.png"
           alt="hand"
@@ -488,27 +488,46 @@
       </div>
     </div>
     <!-- result page -->
-    <div class="result-page-container" hidden>
-      <div class="winner-main">
-        <p class="winner-text">Player 2 is the winner!!!</p>
+    <div class="result-page-container display-hide">
+      <div class="home-page-header">
+        <h1>CLASSIC SET PAPER GAME</h1>
+      </div>
+      <div class="results">
+        <p class="winner-text">Points Table</p>
         <div class="points">
-          <p class="points-text">Points Table :</p>
           <table class="points-table">
             <thead>
               <tr>
+                <td></td>
                 <td>Player Name</td>
                 <td>Points</td>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Player1</td>
+            <tbody class="table-rows">
+              <!-- <tr>
+                <td class="tableCellWidth"> <img
+                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                  alt="avatar"
+                  width="70"
+                  height="70"
+                  class="img-avatar"
+         
+                /></td>
+                <td class="tableCellWidth">Player1</td>
                 <td>200</td>
               </tr>
               <tr>
-                <td>Player2</td>
+                <td class="tableCellWidth"> <img
+                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Wayfarers&hairColor=PastelPink&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Surprised&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Light"
+                  alt="avatar"
+                  width="70"
+                  height="70"
+                  class="img-avatar"
+         
+                /></td>
+                <td class="tableCellWidth">Player2</td>
                 <td>300</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>

@@ -29,11 +29,13 @@ const maxPlayersEl = document.querySelector(".max-players");
 
 const homePageEl = document.querySelector(".home-page-container");
 const gamePageEl = document.querySelector(".game-page-container");
+const resultPageEl = document.querySelector(".result-page-container");
 const otherPlayersEl = document.getElementById("other-players");
 const currentPlayerEl = document.querySelector(".user");
 const cardListEl = document.querySelector(".card-list");
 const playerMessageEl = document.querySelector(".user-info");
 const handImageEl = document.querySelector(".img-hand");
+const pointsTableRowsEl = document.querySelector(".table-rows");
 const URL = "https://avataaars.io";
 
 //Avatar creation ------
@@ -156,17 +158,31 @@ socket.on("gameStarting", function () {
 
 //update PlayerDetails
 socket.on("updatePlayerDetails", function (allPlayers) {
-  const { currentPlayer, otherPlayers } = allPlayers;
+  const { currentPlayer, otherPlayers, cardsMatched } = allPlayers;
   console.log(currentPlayer, otherPlayers);
   outputOtherGamePlayers(otherPlayers);
   outputCurrentPlayer(currentPlayer);
-  displayCurrentPlayerCards(currentPlayer);
-  const sameCardsSet = currentPlayer.cards.reduce((acc, card, index, arr) => {
-    if (card === arr[0] || card === arr[1]) return acc++;
-    return;
-  }, 0);
-  // if(sameCardsSet === 4)
+  cardsMatched
+    ? outputFinishGame(currentPlayer)
+    : displayCurrentPlayerCards(currentPlayer);
 });
+
+function outputFinishGame(player) {
+  const gameID = localStorage.getItem("gameID");
+  const socketId = socket.id;
+  if (player.id === socketId)
+    cardListEl.innerHTML = `<h2 class="game-finish-message"> Your Cards Matched!! Finish the game by pressing set button </h2>`;
+  else
+    cardListEl.innerHTML = `<h2 class="game-finish-message"> ${player.playerName} has set the game!! Pressing set button fast to get more points. </h2>`;
+  playerMessageEl.textContent = "";
+
+  btnHand.addEventListener("click", function () {
+    handImageEl.classList.add("hand-circle-active");
+    if (player.id === socketId) socket.emit("finishGame", { socketId, gameID });
+    else socket.emit("completed", { socketId, gameID });
+    cardListEl.innerHTML = `<h2 class="game-finish-message"> Waiting for the other players to finish. </h2>`;
+  });
+}
 
 function displayCurrentPlayerCards(currentPlayer) {
   cardListEl.innerHTML = currentPlayer.cards.map(
@@ -175,6 +191,12 @@ function displayCurrentPlayerCards(currentPlayer) {
       <p class="card-name">${element}</p>
     </div>`
   );
+  currentPlayer.isActive
+    ? btnEnd.classList.remove("display-hide")
+    : btnEnd.classList.add("display-hide");
+  playerMessageEl.textContent = currentPlayer.isActive
+    ? "Select a card that you want to pass it to next player"
+    : "Please wait for your turn";
 }
 
 function outputCurrentPlayer(currentPlayer) {
@@ -191,12 +213,6 @@ function outputCurrentPlayer(currentPlayer) {
   }"
 />
 <p class="user-name">${currentPlayer.playerName}</p>`;
-  currentPlayer.isActive
-    ? btnEnd.classList.remove("display-hide")
-    : btnEnd.classList.add("display-hide");
-  playerMessageEl.textContent = currentPlayer.isActive
-    ? "Select a card that you want to pass it to next player"
-    : "Please wait for your turn";
 }
 
 function outputOtherGamePlayers(otherPlayers) {
@@ -244,6 +260,38 @@ socket.on("cardPassedSuccessfully", function () {
   socket.emit("getPlayerDetails", socket.id);
 });
 
-btnHand.addEventListener("click", function () {
-  handImageEl.classList.add("hand-circle-active");
+socket.on("waitingPlayerResponse", function (finishedPlayer) {
+  // cardListEl.innerHTML = `<h2 class="game-finish-message"> ${finishedPlayer.playerName} has set the game!! Pressing set button fast to get more points. </h2>`;
+  // playerMessageEl.textContent = "";
+  // const gameID = localStorage.getItem("gameID");
+  // const socketId = socket.id;
+  // btnHand.addEventListener("click", function () {
+  //   handImageEl.classList.add("hand-circle-active");
+  //   socket.emit("completed", { socketId, gameID });
+  //   cardListEl.innerHTML = `<h2 class="game-finish-message"> Waiting for the other players to finish. </h2>`;
+  // });
+  outputFinishGame(finishedPlayer);
+});
+
+socket.on("gamePoints", function (pointsTable) {
+  gamePageEl.classList.add("display-hide");
+  resultPageEl.classList.remove("display-hide");
+
+  pointsTable.forEach((el) => {
+    pointsTableRowsEl.insertAdjacentHTML(
+      "beforeend",
+      `<tr>
+    <td class="tableCellWidth"> <img
+      src="${el.playerImage}"
+      alt="avatar"
+      width="70"
+      height="70"
+      class="img-avatar"
+    
+    /></td>
+    <td class="tableCellWidth">${el.playerName}</td>
+    <td>${el.points}</td>
+    </tr>`
+    );
+  });
 });
