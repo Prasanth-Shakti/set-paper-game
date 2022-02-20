@@ -2,18 +2,21 @@
   "name": "set-paper-game",
   "version": "1.0.0",
   "description": "play set paper game",
-  "main": "server.js",
+  "default": "./public/index.html",
   "scripts": {
-    "start": "node server.js",
-    "dev":"nodemon server"
+    "start": "parcel ./public/index.html",
+    "build": "parcel build ./public/index.html --dist-dir ./dist"
   },
   "author": "Prasanth",
   "license": "ISC",
   "dependencies": {
+    "core-js": "^3.21.1",
     "express": "^4.17.2",
+    "regenerator-runtime": "^0.13.9",
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "parcel": "^2.3.2"
   }
 }

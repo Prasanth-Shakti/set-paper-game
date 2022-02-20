@@ -2,6 +2,7 @@ const path = require("path");
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
+// const cors = require("cors");
 const {
   generateGameID,
   playerJoin,
@@ -19,16 +20,28 @@ const {
   getPlayerPoints,
   storeMaxPlayers,
   getMaxPlayers,
-} = require("./public/js/helpers");
+} = require("./helpers");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
-
+const io = socketio(server, {
+  cors: {
+    origin: "http://localhost:1234",
+  },
+});
+const router = express.Router();
 //set static folder
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname)));
+
+router.get("/", (req, res) => {
+  res.send({ response: "Server is up and running." }).status(200);
+});
+
+// app.use(cors());
+app.use(router);
 
 io.on("connection", (socket) => {
+  console.log("new connection....");
   socket.on(
     "createRoom",
     ({ playerName, cardName, playerImage, maxPlayers = 3 }) => {
@@ -153,6 +166,6 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 3000 | process.env.PORT;
+const PORT = 5000 | process.env.PORT;
 
 server.listen(PORT, () => console.log(`SERVER RUNNING ON ${PORT}`));

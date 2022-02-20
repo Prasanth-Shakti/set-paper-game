@@ -1,4 +1,9 @@
-const socket = io();
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
+const ENDPOINT = "localhost:5000";
+
+const socket = io(ENDPOINT);
 
 const hostPlayerNameEl = document.getElementById("hostPlayerName");
 const hostCardNameEl = document.getElementById("hostCardName");
