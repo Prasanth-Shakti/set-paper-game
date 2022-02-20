@@ -1,17 +1,14 @@
-const path = require("path");
-const http = require("http");
-const express = require("express");
-const socketio = require("socket.io");
-// const cors = require("cors");
-const {
+import { createServer } from "http";
+import express from "express";
+import { Server } from "socket.io";
+
+import {
   generateGameID,
   playerJoin,
   generateAvatar,
   getRoomPlayers,
   getCurrentPlayer,
-  generateGameCards,
   getOtherPlayers,
-  assignCardToPlayers,
   getShuffledPlayers,
   playerLeave,
   passCardToNextPlayer,
@@ -20,18 +17,16 @@ const {
   getPlayerPoints,
   storeMaxPlayers,
   getMaxPlayers,
-} = require("./helpers");
+} from "./utils/index.js";
 
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server, {
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:1234",
   },
 });
 const router = express.Router();
-//set static folder
-// app.use(express.static(path.join(__dirname)));
 
 router.get("/", (req, res) => {
   res.send({ response: "Server is up and running." }).status(200);
@@ -94,8 +89,8 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("createAvatar", (url) => {
-    const avatar = generateAvatar(url);
+  socket.on("createAvatar", () => {
+    const avatar = generateAvatar();
     socket.emit("avatarCreated", avatar);
   });
 
@@ -168,4 +163,4 @@ io.on("connection", (socket) => {
 
 const PORT = 5000 | process.env.PORT;
 
-server.listen(PORT, () => console.log(`SERVER RUNNING ON ${PORT}`));
+httpServer.listen(PORT, () => console.log(`SERVER RUNNING ON ${PORT}`));

@@ -42,12 +42,11 @@ const cardListEl = document.querySelector(".card-list");
 const playerMessageEl = document.querySelector(".user-info");
 const handImageEl = document.querySelector(".img-hand");
 const pointsTableRowsEl = document.querySelector(".table-rows");
-const URL = "https://avataaars.io";
 
 //Avatar creation ------
 btnAvatar.forEach((element) => {
   element.addEventListener("click", function () {
-    socket.emit("createAvatar", URL);
+    socket.emit("createAvatar");
   });
 });
 
