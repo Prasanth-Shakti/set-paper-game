@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Classic Set paper game</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/external-itim2101-lineal-color-itim2101/64/000000/external-paper-stationery-and-office-itim2101-lineal-color-itim2101.png"
+    />
     <link rel="stylesheet" href="css/style.css" />
 
     <script src="js/app.js" defer></script>
@@ -12,9 +17,12 @@
   </head>
   <body>
     <!-- home page includes player section, settings section , rules -->
-    <div class="home-page-container ">
+    <div class="home-page-container">
       <div class="home-page-header">
         <h1>CLASSIC SET PAPER GAME</h1>
+        <a href="https://github.com/Prasanth-Shakti/set-paper-game"
+          >Github Repo</a
+        >
       </div>
 
       <div class="player-section">
@@ -49,7 +57,9 @@
               <button class="btn-avatar">Random</button>
             </div>
           </div>
-
+          <p class="host-error-message display-hide">
+            Player name and Card name is mandatory
+          </p>
           <button class="btn btn-host">Host New Game</button>
         </div>
         <!-- separator -->
@@ -456,7 +466,6 @@
         <ul id="other-players" class="players-list"></ul>
       </div>
       <button class="hand-circle">
-     
         <img
           src="./img/handIcon.png"
           alt="hand"

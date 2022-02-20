@@ -138,6 +138,11 @@ select {
   padding-left: 20px;
 }
 
+.host-error-message {
+  display: flex;
+  color: red;
+}
+
 /* avatar */
 .avatar {
   margin-left: 10px;

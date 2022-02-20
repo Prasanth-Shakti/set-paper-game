@@ -6,6 +6,7 @@ const guestPlayerNameEl = document.getElementById("guestPlayerName");
 const guestCardNameEl = document.getElementById("guestCardName");
 const gameIDEl = document.getElementById("gameID");
 const playerAvatarEl = document.querySelectorAll(".player-avatar");
+const hostErrorMsgEl = document.querySelector(".host-error-message");
 
 const btnHost = document.querySelector(".btn-host");
 const btnJoin = document.querySelector(".btn-join");
@@ -57,7 +58,9 @@ btnHost.addEventListener("click", function () {
   const playerName = hostPlayerNameEl.value;
   const cardName = hostCardNameEl.value;
   const playerImage = hostImage.src;
-  socket.emit("createRoom", { playerName, cardName, playerImage });
+  if (playerName !== "" || cardName !== "")
+    socket.emit("createRoom", { playerName, cardName, playerImage });
+  else return hostErrorMsgEl.classList.remove("display-hide");
 });
 
 socket.on("gameCreated", function () {
