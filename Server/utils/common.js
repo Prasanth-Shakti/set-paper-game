@@ -1,4 +1,4 @@
-import { players, shuffledPlayers, totalCards } from "../config.js";
+import { players, shuffledPlayers } from "../config.js";
 
 // Get room players
 function getRoomPlayers(gameID, shuffled = false) {

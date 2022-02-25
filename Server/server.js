@@ -17,7 +17,9 @@ import {
   getPlayerPoints,
   storeMaxPlayers,
   getMaxPlayers,
+  checkPlayerAndCardexist,
 } from "./utils/index.js";
+import { shuffledPlayers, players, totalCards, pointsTable } from "./config.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -64,11 +66,23 @@ io.on("connection", (socket) => {
       });
     }
   );
-  socket.on("joinRoom", ({ playerName, cardName, playerImage, gameID }) => {
+  socket.on("joinRoom", (playerDetails) => {
+    const { playerName, cardName, playerImage, gameID } = playerDetails;
     const playersInRoom = getRoomPlayers(gameID);
+    const isplayerDetailsExist = checkPlayerAndCardexist(playerDetails);
     const maxPlayers = getMaxPlayers();
     if (playersInRoom.length >= maxPlayers)
-      return socket.emit("errorMessage", "Max players limit reached!!!");
+      return socket.emit("joinErrorMessage", "Max players limit reached!!!");
+    if (shuffledPlayers.length > 0)
+      return socket.emit(
+        "joinErrorMessage",
+        "There is already game running with this gameID!!!"
+      );
+    if (isplayerDetailsExist)
+      return socket.emit(
+        "joinErrorMessage",
+        "Player name or card name already taken in the game!!!"
+      );
     const player = playerJoin(
       socket.id,
       playerName,
@@ -80,7 +94,6 @@ io.on("connection", (socket) => {
     socket.join(player.gameID);
 
     socket.emit("guestJoined");
-    // console.log(`Guest :${gameID}, ${playerName}, ${cardName}`);
 
     io.to(player.gameID).emit("roomplayers", {
       gameID: player.gameID,
@@ -124,8 +137,7 @@ io.on("connection", (socket) => {
 
   socket.on("passCard", (cardDetails) => {
     const { gameID } = cardDetails;
-    const roomPlayers = passCardToNextPlayer(cardDetails);
-    // console.log("roomPlayers:", roomPlayers);
+    passCardToNextPlayer(cardDetails);
     io.to(gameID).emit("cardPassedSuccessfully");
   });
 
@@ -140,7 +152,6 @@ io.on("connection", (socket) => {
     const { gameID } = player;
     addPlayerToPointsTable(player);
     const pointsTable = getPlayerPoints(gameID);
-    console.log(pointsTable);
     if (pointsTable) io.to(gameID).emit("gamePoints", pointsTable);
   });
 
@@ -148,15 +159,21 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     const player = playerLeave(socket.id);
     if (player) {
-      // io.to(player.gameID).emit(
-      //   "message",
-      //   formatMessage(botName, `${player.username} has left the chat`)
-      // );
-      // send users joined the room and room info
-      io.to(player.gameID).emit("gameRoomPlayers", {
+      const maxPlayers = getMaxPlayers();
+      // send player list of setting page
+      io.to(player.gameID).emit("roomplayers", {
         gameID: player.gameID,
         players: getRoomPlayers(player.gameID),
+        maxPlayers,
       });
+      if (shuffledPlayers.length > 0) {
+        const leftPlayer = getCurrentPlayer(socket.id);
+        io.to(player.gameID).emit("playerLeft", leftPlayer);
+        shuffledPlayers.length = 0;
+        players.length = 0;
+        pointsTable.length = 0;
+        totalCards.length = 0;
+      }
     }
   });
 });

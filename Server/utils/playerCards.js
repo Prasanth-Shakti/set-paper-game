@@ -48,7 +48,6 @@ function passCardToNextPlayer(cardDetails) {
       const nextPlayer = arr[index + 1] ? arr[index + 1] : arr[0];
       nextPlayer.isActive = true;
       nextPlayer.cards.push(cardText);
-      // console.log(`--------- player : ${nextPlayer.playerName}`, nextPlayer);
       return player;
     }
   });
@@ -62,7 +61,6 @@ function checkCardsMatched(id) {
   const counter = 0;
   const isSet1Matched = isCardsASet(card1, currentPlayer.cards, counter);
   const isSet2Matched = isCardsASet(card2, currentPlayer.cards, counter);
-  // console.log(isSet1Matched, isSet2Matched);
   return isSet1Matched || isSet2Matched;
 }
 

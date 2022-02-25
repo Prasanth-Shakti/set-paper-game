@@ -1,4 +1,5 @@
 import { players } from "../config.js";
+import { getRoomPlayers } from "./index.js";
 let maxPlayers = 3;
 
 //Join players to game
@@ -28,10 +29,21 @@ const playerJoin = function (
 // player leaves game
 function playerLeave(id) {
   const index = players.findIndex((player) => player.id === id);
-
   if (index !== -1) {
     return players.splice(index, 1)[0];
   }
+}
+
+function checkPlayerAndCardexist(playerDetails) {
+  const { playerName, cardName, gameID } = playerDetails;
+  const roomPlayers = getRoomPlayers(gameID);
+
+  const index = roomPlayers.findIndex(
+    (player) => player.playerName === playerName || player.cardName === cardName
+  );
+
+  if (index === -1) return false;
+  else return true;
 }
 
 function storeMaxPlayers(number) {
@@ -42,4 +54,10 @@ function getMaxPlayers() {
   return maxPlayers;
 }
 
-export { playerJoin, playerLeave, storeMaxPlayers, getMaxPlayers };
+export {
+  playerJoin,
+  playerLeave,
+  storeMaxPlayers,
+  getMaxPlayers,
+  checkPlayerAndCardexist,
+};

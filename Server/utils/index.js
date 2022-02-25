@@ -11,6 +11,7 @@ import {
   playerLeave,
   storeMaxPlayers,
   getMaxPlayers,
+  checkPlayerAndCardexist,
 } from "./players.js";
 import { addPlayerToPointsTable, getPlayerPoints } from "./pointsTable.js";
 import {
@@ -38,6 +39,7 @@ export {
   getShuffledPlayers,
   getCurrentPlayer,
   getOtherPlayers,
+  checkPlayerAndCardexist,
   botNames,
   botCardNames,
 };
