@@ -1,6 +1,7 @@
 const numPlayers = document.querySelectorAll(".players-joined");
 const playersList = document.querySelectorAll(".players");
-const gameRoom = document.querySelector(".game-room");
+const gameRoom = document.querySelector(".gameID-text");
+const tooltipEl = document.getElementById("myTooltip");
 const maxPlayersSelectEl = document.getElementById("select-max-players");
 const maxPlayersEl = document.querySelector(".max-player-limit");
 
@@ -12,7 +13,6 @@ const btnStart = document.getElementById("btn-start");
 //Get room users
 function roomplayers(socket) {
   socket.on("roomplayers", ({ gameID, players, maxPlayers }) => {
-    localStorage.clear();
     localStorage.setItem("gameID", gameID);
     outputGameID(gameID);
     outputPlayers(players);
@@ -35,6 +35,16 @@ function recieveMaxPlayers(socket) {
   });
 }
 
+function copyGameID() {
+  const copyBtn = document.querySelector(".copy-text");
+  copyBtn.addEventListener("click", function () {
+    gameRoom.select();
+    gameRoom.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(gameRoom.value);
+    tooltipEl.innerHTML = "Copied: " + gameRoom.value;
+  });
+}
+
 //Start Game
 function startGame(socket) {
   btnStart.addEventListener("click", function () {
@@ -47,13 +57,14 @@ function recieveGame(socket) {
   socket.on("gameStarting", function () {
     homePageEl.classList.add("display-hide");
     gamePageEl.classList.remove("display-hide");
+    localStorage.setItem("currentPage", "game");
     socket.emit("getPlayerDetails", socket.id);
   });
 }
 
 //output functions
 function outputGameID(gameID) {
-  gameRoom.innerHTML = `<h2>Game ID : ${gameID}</h2>`;
+  gameRoom.value = gameID;
 }
 function outputMaxPlayers(maxPlayers) {
   maxPlayersEl.innerHTML = `<h4>Max Players : ${maxPlayers}</h4>`;
@@ -91,4 +102,5 @@ export {
   recieveMaxPlayers,
   startGame,
   recieveGame,
+  copyGameID,
 };

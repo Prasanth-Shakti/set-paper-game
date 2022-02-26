@@ -7,7 +7,7 @@ function gamePoints(socket) {
   serverSocket.on("gamePoints", function (pointsTable) {
     gamePageEl.classList.add("display-hide");
     resultPageEl.classList.remove("display-hide");
-
+    localStorage.setItem("currentPage", "result");
     pointsTable.forEach((el) => {
       pointsTableRowsEl.insertAdjacentHTML(
         "beforeend",

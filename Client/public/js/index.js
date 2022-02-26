@@ -19,6 +19,7 @@ import {
   recieveMaxPlayers,
   startGame,
   recieveGame,
+  copyGameID,
 } from "./Pages/settings";
 import {
   updatePlayerDetails,
@@ -29,6 +30,10 @@ import {
   playerLeftGame,
 } from "./Pages/game";
 import { gamePoints } from "./Pages/results";
+import { rulesList } from "./Pages/rules";
+import { logWindowResize } from "./Pages/device";
+
+window.addEventListener("resize", logWindowResize);
 
 // ----- home page ----
 //Avatar
@@ -52,10 +57,15 @@ roomplayers(socket);
 changeMaxPlayers(socket);
 recieveMaxPlayers(socket);
 
+//copy gameID
+copyGameID();
+
 // host start game
 startGame(socket);
 recieveGame(socket);
 
+//rules for all players
+rulesList();
 //-------- game page ----
 //update each PlayerDetails
 updatePlayerDetails(socket);

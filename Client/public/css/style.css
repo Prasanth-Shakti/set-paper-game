@@ -25,9 +25,100 @@ tr {
   height: 40px;
 }
 
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 20px;
+  }
+  a {
+    font-size: 15px;
+  }
+  input,
+  select {
+    height: 35px;
+  }
+  .host-input-control,
+  .guest-input-control {
+    height: 90px;
+  }
+  .player-section,
+  .settings-section {
+    flex-direction: column;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  h1 {
+    font-size: 20px;
+  }
+  a {
+    font-size: 15px;
+  }
+  input,
+  select {
+    height: 35px;
+  }
+  .host-input-control,
+  .guest-input-control {
+    height: 90px;
+  }
+  .player-section,
+  .settings-section {
+    flex-direction: column;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  h1 {
+    font-size: 20px;
+  }
+  a {
+    font-size: 15px;
+  }
+  input,
+  select {
+    height: 35px;
+  }
+  .host-input-control,
+  .guest-input-control {
+    height: 90px;
+  }
+  .player-section,
+  .settings-section {
+    flex-direction: column;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  h1 {
+    font-size: 30px;
+  }
+  a {
+    font-size: 18px;
+  }
+  input,
+  select {
+    height: 50px;
+  }
+  .host-input-control,
+  .guest-input-control {
+    height: 125px;
+  }
+  .player-section,
+  .settings-section {
+    flex-direction: row;
+  }
+}
+
 input,
 select {
-  height: 50px;
   border-radius: 5px;
   border: 1px solid #aaaaaa;
   padding-left: 10px;
@@ -38,6 +129,18 @@ select {
 select {
   width: 100px;
   height: 40px;
+}
+a {
+  color: #424edf;
+  margin: 5px;
+}
+
+.device-message {
+  margin-top: 100px;
+  text-align: center;
+  font-weight: bold;
+  background-color: lightskyblue;
+  padding: 10px;
 }
 
 /* -------------- high level containers -------------------*/
@@ -60,12 +163,16 @@ select {
 }
 
 .home-page-header {
-  font-size: 16px;
+  display: flex;
   width: 100%;
+  align-items: center;
+  justify-content: flex-end;
   height: 55px;
   padding-top: 20px;
-  text-align: center;
   background-image: linear-gradient(315deg, #4dccc6 100%, #96e4df 74%);
+}
+.header-text {
+  width: 50%;
 }
 .game-header {
   padding-top: 20px;
@@ -75,7 +182,6 @@ select {
 .player-section,
 .settings-section {
   display: flex;
-  flex-direction: row;
   width: 100%;
   align-items: center;
 }
@@ -121,7 +227,6 @@ select {
 }
 .host-input-control,
 .guest-input-control {
-  height: 125px;
   justify-content: space-between;
 }
 
@@ -204,7 +309,9 @@ select {
 .player-id {
   list-style-type: none;
   margin: 0px 30px 20px 0px;
-  overflow-wrap: break-word;
+  /* overflow-wrap: break-word; */
+  width: 90px;
+  overflow: hidden;
 }
 .player-name,
 .player-card {
@@ -213,13 +320,65 @@ select {
 .player-isHost {
   margin: 5px;
 }
-.max-player-select {
+.max-player-select,
+.game-room {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 .marginTop20 {
   margin-top: 20px;
+}
+
+.copy-text {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+.divider {
+  margin: 0px 30px 0px 30px;
+}
+.gameID-text {
+  width: 150px;
 }
 
 /*-----------------  game rules--------------------------- */
@@ -251,6 +410,10 @@ select {
   text-align: left;
 }
 
+.rule {
+  line-height: 23px;
+}
+
 /*----------------- game page--------------------------- */
 
 /* header */
@@ -267,17 +430,6 @@ select {
   margin: 0;
   padding: 0;
 }
-/* .player-id {
-  list-style-type: none;
-  text-align: center;
-  margin: 10px;
-} */
-/* .img-avatar {
-  border: 1px solid #404040;
-  border-radius: 10px;
-  background-color: #ffffff;
-  padding: 5px;
-} */
 
 /* set game button icon */
 .hand-circle {
@@ -360,13 +512,15 @@ select {
 .card-list {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  justify-content: center;
 }
 .card {
   display: flex;
-  margin: 15px;
+  margin: 15px 5px 25px 5px;
   flex-direction: column;
-  width: 200px;
-  height: 220px;
+  width: 15%;
+  height: 190px;
   background: #ffffff;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.07);
   overflow: hidden;

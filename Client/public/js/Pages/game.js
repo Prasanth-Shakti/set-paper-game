@@ -65,6 +65,7 @@ function playerLeftGame(socket) {
     cardListEl.innerHTML = `<h2 class="game-finish-message"> ${player.playerName} has left the game!! Please restart the game again. </h2>`;
     playerMessageEl.textContent = "";
     btnEnd.classList.add("display-hide");
+    localStorage.clear();
   });
 }
 
