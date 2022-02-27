@@ -1,13 +1,33 @@
 const otherPlayersEl = document.getElementById("other-players");
 const currentPlayerEl = document.querySelector(".user");
 const cardListEl = document.querySelector(".card-list");
+// const cardsEl = document.querySelectorAll(".card");
 const playerMessageEl = document.querySelector(".user-info");
 const handImageEl = document.querySelector(".img-hand");
-
+// const btnLeft = document.querySelector(".left-btn");
+// const btnRight = document.querySelector(".right-btn");
 const btnEnd = document.querySelector(".btn-end");
 const btnHand = document.querySelector(".hand-circle");
 
-//
+// function cardAssignValues() {
+//   cardsEl.forEach((card, index) => (card.style.transform = "translateX(0%)"));
+//   // cardsEl.forEach(
+//   //   (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+//   // );
+// }
+
+// function cardCoursel() {
+//   let currSlide = 0;
+//   btnRight.addEventListener("click", function () {
+//     currSlide++;
+//     console.log("clicked");
+//     cardsEl.forEach(
+//       (card, index) =>
+//         (card.style.transform = "translateX(`${-85 * currSlide}%`)")
+//     );
+//   });
+// }
+
 function updatePlayerDetails(socket) {
   const serverSocket = socket;
   serverSocket.on("updatePlayerDetails", function (allPlayers) {
@@ -81,6 +101,7 @@ function outputFinishGame(player, socket) {
   playerMessageEl.textContent = "";
 
   btnHand.addEventListener("click", function () {
+    console.log("hand clicked");
     handImageEl.classList.add("hand-circle-active");
     if (player.id === socketId) socket.emit("finishGame", { socketId, gameID });
     else socket.emit("completed", { socketId, gameID });
@@ -97,8 +118,8 @@ function outputCurrentPlayer(currentPlayer) {
       height="70"
       class ="${
         currentPlayer.isActive === true
-          ? `img-avatar isPlayer-active`
-          : `img-avatar`
+          ? `game-avatar isPlayer-active`
+          : `game-avatar`
       }"
     />
     <p class="user-name">${currentPlayer.playerName}</p>`;
@@ -115,8 +136,8 @@ function outputOtherGamePlayers(otherPlayers) {
         height="70"
         class ="${
           element.isActive === true
-            ? `img-avatar isPlayer-active`
-            : `img-avatar`
+            ? `game-avatar isPlayer-active`
+            : `game-avatar`
         }"
       />
       <p class="player-name">${element.playerName}</p>
@@ -126,8 +147,8 @@ function outputOtherGamePlayers(otherPlayers) {
 
 function displayCurrentPlayerCards(currentPlayer) {
   cardListEl.innerHTML = currentPlayer.cards.map(
-    (element, i) => `
-      <div class="card isInActiveCard" data-isactive = "${currentPlayer.isActive}">
+    (element, i) =>
+      `<div class="card isInActiveCard" data-isactive = "${currentPlayer.isActive}">
         <p class="card-name">${element}</p>
       </div>`
   );
@@ -139,6 +160,8 @@ function displayCurrentPlayerCards(currentPlayer) {
     : "Please wait for your turn";
 }
 
+// cardAssignValues();
+
 export {
   updatePlayerDetails,
   selectCard,
@@ -146,4 +169,5 @@ export {
   passToNextPlayer,
   waitPlayerResponse,
   playerLeftGame,
+  cardCoursel,
 };

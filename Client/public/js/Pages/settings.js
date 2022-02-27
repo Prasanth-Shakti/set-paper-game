@@ -85,7 +85,7 @@ function outputPlayers(players) {
         alt="avatar"
         width="70"
         height="70"
-        class="img-avatar"
+        class="img-avatar settings-avatar"
       />
       <p class="player-name">${player.playerName}</p>
       <p class="player-card">Card : ${player.cardName}</p> 

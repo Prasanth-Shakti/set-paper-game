@@ -23,11 +23,13 @@ function createRoom(socket) {
     const playerName = hostPlayerNameEl.value;
     const cardName = hostCardNameEl.value;
     const playerImage = hostImage.src;
-    if (playerName !== "" || cardName !== "")
+    if (playerName !== "" || cardName !== "") {
+      hostErrorMsgEl.classList.remove("display-hide");
       socket.emit("createRoom", { playerName, cardName, playerImage });
-    else
-      return (hostErrorMsgEl.innerText =
-        "Player name and Card name is mandatory");
+    } else {
+      hostErrorMsgEl.classList.remove("display-hide");
+      hostErrorMsgEl.innerText = "Player name and Card name is mandatory";
+    }
   });
 }
 
@@ -48,16 +50,19 @@ function joinRoom(socket) {
     const cardName = guestCardNameEl.value;
     const gameID = gameIDEl.value;
     const playerImage = guestImage.src;
-    if (playerName !== "" || cardName !== "")
+    if (playerName !== "" || cardName !== "") {
+      guestErrorMsgEl.classList.remove("display-hide");
       socket.emit("joinRoom", {
         playerName,
         cardName,
         gameID,
         playerImage,
       });
-    else
-      return (guestErrorMsgEl.innerText =
-        "GameID, Player name and Card name is mandatory");
+    } else {
+      guestErrorMsgEl.classList.remove("display-hide");
+      guestErrorMsgEl.innerText =
+        "GameID, Player name and Card name is mandatory";
+    }
   });
 }
 

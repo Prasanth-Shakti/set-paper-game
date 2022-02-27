@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+
     <title>Classic Set paper game</title>
     <link
       rel="icon"
@@ -63,7 +67,7 @@
               <button class="btn-avatar">Random Avatar</button>
             </div>
           </div>
-          <p class="host-error-message"></p>
+          <p class="host-error-message display-hide"></p>
           <button class="btn btn-host">Host New Game</button>
         </div>
         <!-- separator -->
@@ -114,7 +118,7 @@
               </div>
             </div>
           </div>
-          <p class="guest-error-message"></p>
+          <p class="guest-error-message display-hide"></p>
           <button type="submit" class="btn btn-join">Join Game</button>
         </div>
       </div>
@@ -123,43 +127,48 @@
         <div class="host-settings display-hide">
           <div class="settings-container">
             <div class="game-room">
-              <h2>Game ID :</h2>
-              <div class="padLeftt20">
-                <input
-                  type="text"
-                  name="showGameID"
-                  class="gameID-text"
-                  placeholder="xxxx-xxxx"
-                  disabled
-                />
-              </div>
-              <div class="tooltip">
-                <button class="copy-text">
-                  <span class="tooltiptext" id="myTooltip"
-                    >Copy to clipboard</span
-                  >
-                  <img
-                    src="./img/copy.png"
-                    alt="copy text"
-                    width="30"
-                    height="30"
-                    id="copy"
+              <div class="rowDirection">
+                <h2>Game ID :</h2>
+                <div class="padLeftt20">
+                  <input
+                    type="text"
+                    name="showGameID"
+                    class="gameID-text"
+                    placeholder="xxxx-xxxx"
+                    disabled
                   />
-                </button>
+                </div>
+                <div class="tooltip">
+                  <button class="copy-text">
+                    <span class="tooltiptext" id="myTooltip"
+                      >Copy to clipboard</span
+                    >
+                    <img
+                      src="./img/copy.png"
+                      alt="copy text"
+                      width="30"
+                      height="30"
+                      class="copy-img"
+                      id="copy"
+                    />
+                  </button>
+                </div>
               </div>
-              <h1 class="divider">|</h1>
-              <h4>Max Players</h4>
-              <div class="padLeftt20">
-                <select name="room" id="select-max-players">
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
+
+              <div class="rowDirection marginTop20">
+                <h4>Max Players</h4>
+                <div class="padLeftt20">
+                  <select name="room" id="select-max-players">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="players-joined marginTop20">
@@ -545,7 +554,7 @@
       </div>
     </div>
     <p class="device-message display-hide">
-      Please use Landscape mode to play the game.
+      Please use potrait mode to play the game.
     </p>
   </body>
 </html>

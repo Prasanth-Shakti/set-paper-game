@@ -32,7 +32,7 @@ const logWindowResize = async function () {
   console.log(window.innerWidth, window.innerHeight);
 
   const isDeviceElExist = !deviceMessageEl.classList.contains("display-hide");
-  if (window.innerHeight > window.innerWidth) {
+  if (window.innerWidth < 1200 && window.innerHeight < window.innerWidth) {
     displayPage();
   } else {
     isDeviceElExist ? displayPage() : "";
