@@ -23,8 +23,8 @@ function getCurrentPlayer(id) {
 }
 
 //get shuffled players other than current player
-function getOtherPlayers(id) {
-  return shuffledPlayers.filter((player) => player.id !== id);
+function getActivePlayer(id) {
+  return shuffledPlayers.find((player) => player.isActive);
 }
 
-export { getShuffledPlayers, getCurrentPlayer, getOtherPlayers };
+export { getShuffledPlayers, getCurrentPlayer, getActivePlayer };

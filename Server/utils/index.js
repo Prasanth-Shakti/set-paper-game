@@ -17,7 +17,7 @@ import { addPlayerToPointsTable, getPlayerPoints } from "./pointsTable.js";
 import {
   getShuffledPlayers,
   getCurrentPlayer,
-  getOtherPlayers,
+  getActivePlayer,
 } from "./shuffledPlayers.js";
 import { botNames } from "./botNames.js";
 import { botCardNames } from "./botCardNames.js";
@@ -38,7 +38,7 @@ export {
   getPlayerPoints,
   getShuffledPlayers,
   getCurrentPlayer,
-  getOtherPlayers,
+  getActivePlayer,
   checkPlayerAndCardexist,
   botNames,
   botCardNames,

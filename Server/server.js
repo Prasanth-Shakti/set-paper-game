@@ -8,7 +8,7 @@ import {
   generateAvatar,
   getRoomPlayers,
   getCurrentPlayer,
-  getOtherPlayers,
+  getActivePlayer,
   getShuffledPlayers,
   playerLeave,
   passCardToNextPlayer,
@@ -124,13 +124,14 @@ io.on("connection", (socket) => {
     // currentplayer
     const currentPlayer = getCurrentPlayer(id);
     // const otherPlayers = players -currentPlayer
-    const otherPlayers = getOtherPlayers(id);
+    const activePlayer = getActivePlayer();
 
     const cardsMatched = checkCardsMatched(id);
 
     socket.emit("updatePlayerDetails", {
       currentPlayer,
-      otherPlayers,
+      shuffledPlayers,
+      activePlayer,
       cardsMatched,
     });
   });

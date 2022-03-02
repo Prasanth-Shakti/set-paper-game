@@ -15,7 +15,6 @@
       href="https://img.icons8.com/external-itim2101-lineal-color-itim2101/64/000000/external-paper-stationery-and-office-itim2101-lineal-color-itim2101.png"
     />
     <link rel="stylesheet" href="css/style.css" />
-
     <script type="module" src="./js/index.js" defer></script>
     <script src="http://localhost:5000/socket.io/socket.io.js"></script>
   </head>
@@ -497,15 +496,23 @@
     </div>
     <!-- play game  -->
     <div class="game-page-container display-hide">
-      <div class="game-header">
-        <ul id="other-players" class="players-list"></ul>
+      <div id="mySidenav" class="sidenav">
+        <p class="player-order">🡻 Playing Order</p>
+        <div class="order-list">
+          <p class="player-order">player 1</p>
+          <p class="player-order">player 2</p>
+        </div>
       </div>
+      <div class="game-header">
+        <button class="btn btn-player-list">&#9776; Players List</button>
+      </div>
+      <div class="active-player"></div>
       <button class="hand-circle">
         <img
           src="./img/handIcon.png"
           alt="hand"
-          width="110"
-          height="110"
+          width="100%"
+          height="100%"
           class="img-hand"
         />
       </button>
@@ -555,7 +562,7 @@
     </div>
     <!-- result page -->
     <div class="result-page-container display-hide">
-      <div class="home-page-header">
+      <div class="home-page-header header-center">
         <h1>CLASSIC SET PAPER GAME</h1>
       </div>
       <div class="results">

@@ -1,20 +1,24 @@
-const otherPlayersEl = document.getElementById("other-players");
 const currentPlayerEl = document.querySelector(".user");
 const cardListEl = document.querySelector(".card-list");
-const cardsEl = document.querySelectorAll(".card");
 const playerMessageEl = document.querySelector(".user-info");
 const handImageEl = document.querySelector(".img-hand");
 const btnLeft = document.querySelector(".left-btn");
 const btnRight = document.querySelector(".right-btn");
 const btnEnd = document.querySelector(".btn-end");
 const btnHand = document.querySelector(".hand-circle");
+const btnPlayerList = document.querySelector(".btn-player-list");
+const sideBarEl = document.getElementById("mySidenav");
+const playingOrderEl = document.querySelector(".order-list");
+const activePlayerEl = document.querySelector(".active-player");
 
 function updatePlayerDetails(socket) {
   const serverSocket = socket;
   serverSocket.on("updatePlayerDetails", function (allPlayers) {
-    const { currentPlayer, otherPlayers, cardsMatched } = allPlayers;
-    outputOtherGamePlayers(otherPlayers);
+    const { currentPlayer, shuffledPlayers, activePlayer, cardsMatched } =
+      allPlayers;
+    outputShuffledPlayers(shuffledPlayers);
     outputCurrentPlayer(currentPlayer);
+    outputActivePlayer(currentPlayer, activePlayer);
     cardsMatched
       ? outputFinishGame(currentPlayer, serverSocket)
       : displayCurrentPlayerCards(currentPlayer);
@@ -40,19 +44,35 @@ function selectCard() {
 
 function cardCoursel() {
   let currSlide = 0;
+
+  // observer = new MutationObserver(function (mutationsList, observer) {
+  //   console.log(mutationsList);
+  // });
+  // observer.observe(cardListEl, {
+  //   characterData: false,
+  //   childList: true,
+  //   attributes: false,
+  // });
+
   const maxCards = cardListEl.children.length;
   btnRight.addEventListener("click", function () {
     if (currSlide < maxCards - 1) {
       currSlide++;
     }
-    cardListEl.style.transform = `translateX(${-20 * currSlide}%)`;
+    currSlide === maxCards - 1
+      ? (btnRight.style.backgroundColor = "#cacaca")
+      : "";
+    btnLeft.style.backgroundColor = "#3bc18d";
+    cardListEl.style.transform = `translateX(${-200 * currSlide}px)`;
     console.log(cardListEl.style.transform);
   });
   btnLeft.addEventListener("click", function () {
     if (currSlide > 0) {
       currSlide--;
     }
-    cardListEl.style.transform = `translateX(${-20 * currSlide}%)`;
+    currSlide === 0 ? (btnLeft.style.backgroundColor = "#cacaca") : "";
+    btnRight.style.backgroundColor = "#3bc18d";
+    cardListEl.style.transform = `translateX(${-200 * currSlide}px)`;
     console.log(cardListEl.style.transform);
   });
 }
@@ -125,24 +145,33 @@ function outputCurrentPlayer(currentPlayer) {
     <p class="user-name">${currentPlayer.playerName}</p>`;
 }
 
-function outputOtherGamePlayers(otherPlayers) {
-  otherPlayersEl.innerHTML = otherPlayers.map(
-    (element) => ` 
-      <li class="player-id">
+function outputActivePlayer(currentPlayer, activePlayer) {
+  if (currentPlayer.id === activePlayer.id)
+    activePlayerEl.innerHTML = `<h2 class="game-finish-message"> Your are playing...`;
+  else
+    activePlayerEl.innerHTML = `
       <img
-        src=${element.playerImage}
-        alt="avatar"
-        width="70"
-        height="70"
-        class ="${
-          element.isActive === true
-            ? `game-avatar isPlayer-active`
-            : `game-avatar`
-        }"
-      />
-      <p class="player-name">${element.playerName}</p>
-    </li>`
-  );
+      src=${activePlayer.playerImage}
+      alt="avatar"
+      width="70"
+      height="70"
+      class ="${
+        activePlayer.isActive === true
+          ? `game-avatar isPlayer-active`
+          : `game-avatar`
+      }"
+    />
+    <p class="user-name">${activePlayer.playerName} is playing ...</p>`;
+}
+
+function outputShuffledPlayers(shuffledPlayers) {
+  playingOrderEl.innerHTML = shuffledPlayers
+    .map(
+      (element) => `
+    <p class="player-order">${element.playerName}</p>
+     `
+    )
+    .join("");
 }
 
 function displayCurrentPlayerCards(currentPlayer) {
@@ -161,7 +190,12 @@ function displayCurrentPlayerCards(currentPlayer) {
     : "Please wait for your turn";
 }
 
-// cardAssignValues();
+function gamePlayersList() {
+  btnPlayerList.addEventListener("click", function () {
+    if (sideBarEl.style.width === "250px") sideBarEl.style.width = "0px";
+    else sideBarEl.style.width = "250px";
+  });
+}
 
 export {
   updatePlayerDetails,
@@ -171,4 +205,5 @@ export {
   waitPlayerResponse,
   playerLeftGame,
   cardCoursel,
+  gamePlayersList,
 };
