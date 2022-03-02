@@ -114,6 +114,12 @@ tr {
     width: 60px;
     height: 60px;
   }
+  .card {
+    min-width: 190px;
+  }
+  .cardButtons {
+    display: flex;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -202,6 +208,12 @@ tr {
     width: 70px;
     height: 70px;
   }
+  .card {
+    min-width: 190px;
+  }
+  .cardButtons {
+    display: flex;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -288,6 +300,12 @@ tr {
   .game-avatar {
     width: 80px;
     height: 80px;
+  }
+  .card {
+    min-width: 190px;
+  }
+  .cardButtons {
+    display: flex;
   }
 }
 
@@ -436,6 +454,15 @@ tr {
     width: 90px;
     height: 90px;
   }
+  .card-container {
+    justify-content: center;
+  }
+  .card {
+    min-width: 190px;
+  }
+  .cardButtons {
+    display: none;
+  }
 }
 
 input,
@@ -471,7 +498,15 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.home-page-container,
+.result-page-container {
   min-height: 100vh;
+}
+
+.game-page-container {
+  height: 100vh;
 }
 
 .home-page-container {
@@ -745,8 +780,8 @@ a {
 
 /* set game button icon */
 .hand-circle {
-  height: 150px;
-  width: 150px;
+  width: 160px;
+  height: 40%;
   background-color: #dff8ca;
   border: 1px solid #3c4245;
   border-radius: 50%;
@@ -823,25 +858,54 @@ a {
 /* cards list */
 .card-list {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: center;
+  /* width: 15%;
+  overflow: hidden; */
+  max-height: 100%;
+  /* overflow: auto; */
+  transition: transform 1s;
+  transform: translateX(0%);
+  /* justify-content: center; */
 }
 .card {
   display: flex;
   margin: 15px 5px 25px 5px;
   flex-direction: column;
-  width: 15%;
-  height: 190px;
+  /* min-width: 150px; */
   background: #ffffff;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.07);
-  overflow: hidden;
+  /* overflow: hidden; */
   border-radius: 4px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   overflow-wrap: anywhere;
   padding: 5px;
+  /* transform: translateX(0%);
+  transition: transform 1s; */
+}
+.card-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.arrows {
+  width: 100%;
+  justify-content: space-around;
+}
+
+.cardButtons {
+  align-items: center;
+}
+
+.left-btn,
+.right-btn {
+  padding: 5px 10px 0px 10px;
+  background-color: white;
+  border: 1px solid;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 30px;
 }
 
 .isInActiveCard {

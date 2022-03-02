@@ -28,7 +28,7 @@ import {
   passToNextPlayer,
   waitPlayerResponse,
   playerLeftGame,
-  // cardCoursel,
+  cardCoursel,
 } from "./Pages/game";
 import { gamePoints } from "./Pages/results";
 import { rulesList } from "./Pages/rules";
@@ -68,7 +68,7 @@ recieveGame(socket);
 //rules for all players
 rulesList();
 //-------- game page ----
-// cardCoursel(socket);
+cardCoursel(socket);
 
 //update each PlayerDetails
 updatePlayerDetails(socket);

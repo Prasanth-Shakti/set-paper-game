@@ -1,32 +1,13 @@
 const otherPlayersEl = document.getElementById("other-players");
 const currentPlayerEl = document.querySelector(".user");
 const cardListEl = document.querySelector(".card-list");
-// const cardsEl = document.querySelectorAll(".card");
+const cardsEl = document.querySelectorAll(".card");
 const playerMessageEl = document.querySelector(".user-info");
 const handImageEl = document.querySelector(".img-hand");
-// const btnLeft = document.querySelector(".left-btn");
-// const btnRight = document.querySelector(".right-btn");
+const btnLeft = document.querySelector(".left-btn");
+const btnRight = document.querySelector(".right-btn");
 const btnEnd = document.querySelector(".btn-end");
 const btnHand = document.querySelector(".hand-circle");
-
-// function cardAssignValues() {
-//   cardsEl.forEach((card, index) => (card.style.transform = "translateX(0%)"));
-//   // cardsEl.forEach(
-//   //   (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
-//   // );
-// }
-
-// function cardCoursel() {
-//   let currSlide = 0;
-//   btnRight.addEventListener("click", function () {
-//     currSlide++;
-//     console.log("clicked");
-//     cardsEl.forEach(
-//       (card, index) =>
-//         (card.style.transform = "translateX(`${-85 * currSlide}%`)")
-//     );
-//   });
-// }
 
 function updatePlayerDetails(socket) {
   const serverSocket = socket;
@@ -54,6 +35,25 @@ function selectCard() {
       card.classList.toggle("isInActiveCard");
       card.classList.toggle("isActiveCard");
     }
+  });
+}
+
+function cardCoursel() {
+  let currSlide = 0;
+  const maxCards = cardListEl.children.length;
+  btnRight.addEventListener("click", function () {
+    if (currSlide < maxCards - 1) {
+      currSlide++;
+    }
+    cardListEl.style.transform = `translateX(${-20 * currSlide}%)`;
+    console.log(cardListEl.style.transform);
+  });
+  btnLeft.addEventListener("click", function () {
+    if (currSlide > 0) {
+      currSlide--;
+    }
+    cardListEl.style.transform = `translateX(${-20 * currSlide}%)`;
+    console.log(cardListEl.style.transform);
   });
 }
 
@@ -146,12 +146,13 @@ function outputOtherGamePlayers(otherPlayers) {
 }
 
 function displayCurrentPlayerCards(currentPlayer) {
-  cardListEl.innerHTML = currentPlayer.cards.map(
-    (element, i) =>
-      `<div class="card isInActiveCard" data-isactive = "${currentPlayer.isActive}">
-        <p class="card-name">${element}</p>
-      </div>`
-  );
+  cardListEl.innerHTML = currentPlayer.cards
+    .map((element) => {
+      return `<div class="card isInActiveCard" data-isactive = "${currentPlayer.isActive}">
+      <p class="card-name">${element}</p>
+    </div>`;
+    })
+    .join("");
   currentPlayer.isActive
     ? btnEnd.classList.remove("display-hide")
     : btnEnd.classList.add("display-hide");
