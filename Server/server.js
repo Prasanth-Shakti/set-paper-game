@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
     if (shuffledPlayers.length > 0)
       return socket.emit(
         "joinErrorMessage",
-        "There is already game running with this gameID!!!"
+        "There is already a game running!! Please try again after some time."
       );
     if (isplayerDetailsExist)
       return socket.emit(

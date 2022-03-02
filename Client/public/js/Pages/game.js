@@ -10,6 +10,8 @@ const btnPlayerList = document.querySelector(".btn-player-list");
 const sideBarEl = document.getElementById("mySidenav");
 const playingOrderEl = document.querySelector(".order-list");
 const activePlayerEl = document.querySelector(".active-player");
+const cardCountEl = document.querySelector(".card-count");
+const arrowBtnContainer = document.querySelector(".arrows");
 
 function updatePlayerDetails(socket) {
   const serverSocket = socket;
@@ -44,21 +46,25 @@ function selectCard() {
 
 function cardCoursel() {
   let currSlide = 0;
+  let maxCards = 4;
+  observer = new MutationObserver(function (mutationsList, observer) {
+    console.log(mutationsList);
+    maxCards = mutationsList[0].addedNodes.length;
+    if (currSlide === maxCards) {
+      currSlide--;
+      cardListEl.style.transform = `translateX(${-200 * currSlide}px)`;
+    }
+    cardCountEl.innerHTML = `${currSlide + 1}/${maxCards}`;
+  });
+  observer.observe(cardListEl, {
+    childList: true,
+  });
 
-  // observer = new MutationObserver(function (mutationsList, observer) {
-  //   console.log(mutationsList);
-  // });
-  // observer.observe(cardListEl, {
-  //   characterData: false,
-  //   childList: true,
-  //   attributes: false,
-  // });
-
-  const maxCards = cardListEl.children.length;
   btnRight.addEventListener("click", function () {
     if (currSlide < maxCards - 1) {
       currSlide++;
     }
+    cardCountEl.innerHTML = `${currSlide + 1}/${maxCards}`;
     currSlide === maxCards - 1
       ? (btnRight.style.backgroundColor = "#cacaca")
       : "";
@@ -70,6 +76,7 @@ function cardCoursel() {
     if (currSlide > 0) {
       currSlide--;
     }
+    cardCountEl.innerHTML = `${currSlide + 1}/${maxCards}`;
     currSlide === 0 ? (btnLeft.style.backgroundColor = "#cacaca") : "";
     btnRight.style.backgroundColor = "#3bc18d";
     cardListEl.style.transform = `translateX(${-200 * currSlide}px)`;
@@ -119,6 +126,8 @@ function outputFinishGame(player, socket) {
   else
     cardListEl.innerHTML = `<h2 class="game-finish-message"> ${player.playerName} has set the game!! Pressing set button fast to get more points. </h2>`;
   playerMessageEl.textContent = "";
+  cardListEl.style.transform = `translateX(0px)`;
+  arrowBtnContainer.style.display = "none";
 
   btnHand.addEventListener("click", function () {
     console.log("hand clicked");
