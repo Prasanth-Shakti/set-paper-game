@@ -123,9 +123,7 @@ io.on("connection", (socket) => {
   socket.on("getPlayerDetails", (id) => {
     // currentplayer
     const currentPlayer = getCurrentPlayer(id);
-    // const otherPlayers = players -currentPlayer
     const activePlayer = getActivePlayer();
-
     const cardsMatched = checkCardsMatched(id);
 
     socket.emit("updatePlayerDetails", {
@@ -161,7 +159,7 @@ io.on("connection", (socket) => {
     const player = playerLeave(socket.id);
     if (player) {
       const maxPlayers = getMaxPlayers();
-      // send player list of setting page
+      // sends the player list to setting page
       io.to(player.gameID).emit("roomplayers", {
         gameID: player.gameID,
         players: getRoomPlayers(player.gameID),
@@ -169,6 +167,7 @@ io.on("connection", (socket) => {
       });
       if (shuffledPlayers.length > 0) {
         const leftPlayer = getCurrentPlayer(socket.id);
+        // sends the player list to game page
         io.to(player.gameID).emit("playerLeft", leftPlayer);
         shuffledPlayers.length = 0;
         players.length = 0;

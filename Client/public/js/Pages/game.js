@@ -109,10 +109,13 @@ function waitPlayerResponse(socket) {
 
 function playerLeftGame(socket) {
   socket.on("playerLeft", function (player) {
-    cardListEl.innerHTML = `<h2 class="game-finish-message"> ${player.playerName} has left the game!! Please restart the game again. </h2>`;
+    cardListEl.innerHTML = `<h2 class="game-finish-message"> ${player.playerName} has left the game!! Game is restarting..... </h2>`;
     playerMessageEl.textContent = "";
     btnEnd.classList.add("display-hide");
     localStorage.clear();
+    setTimeout(function () {
+      location.reload();
+    }, 3000);
   });
 }
 

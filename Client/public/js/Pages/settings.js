@@ -4,10 +4,8 @@ const gameRoom = document.querySelector(".gameID-text");
 const tooltipEl = document.getElementById("myTooltip");
 const maxPlayersSelectEl = document.getElementById("select-max-players");
 const maxPlayersEl = document.querySelector(".max-player-limit");
-
 const homePageEl = document.querySelector(".home-page-container");
 const gamePageEl = document.querySelector(".game-page-container");
-
 const btnStart = document.getElementById("btn-start");
 
 //Get room users

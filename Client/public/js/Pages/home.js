@@ -41,7 +41,6 @@ function gameCreated(socket) {
   });
 }
 
-//------
 
 //Join Room--------
 function joinRoom(socket) {

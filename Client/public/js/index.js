@@ -2,7 +2,6 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 const ENDPOINT = "localhost:5000";
-
 const socket = io(ENDPOINT);
 
 import { createAvatar, recieveAvatar } from "./Pages/avatar";
