@@ -482,6 +482,7 @@ a {
 
 .game-page-container {
   height: 100vh;
+  overflow: hidden;
 }
 
 .home-page-container {

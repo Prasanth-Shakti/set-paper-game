@@ -27,13 +27,15 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:1234",
+    origin: "*",
   },
 });
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send({ response: "Server is up and running." }).status(200);
+  res
+    .send("This is a Server for set paper game. Server is up and running....")
+    .status(200);
 });
 
 // app.use(cors());
@@ -186,6 +188,6 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 5000 | process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 httpServer.listen(PORT, () => console.log(`SERVER RUNNING ON ${PORT}`));

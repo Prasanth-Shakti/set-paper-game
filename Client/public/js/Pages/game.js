@@ -12,6 +12,7 @@ const playingOrderEl = document.querySelector(".order-list");
 const activePlayerEl = document.querySelector(".active-player");
 const cardCountEl = document.querySelector(".card-count");
 const arrowBtnContainer = document.querySelector(".arrows");
+const cardContainerEl = document.querySelector(".card-container");
 
 function updatePlayerDetails(socket) {
   const serverSocket = socket;
@@ -47,7 +48,7 @@ function selectCard() {
 function cardCoursel() {
   let currSlide = 0;
   let maxCards = 4;
-  observer = new MutationObserver(function (mutationsList, observer) {
+  const observer = new MutationObserver(function (mutationsList, observer) {
     console.log(mutationsList);
     maxCards = mutationsList[0].addedNodes.length;
     if (currSlide === maxCards) {
@@ -131,6 +132,7 @@ function outputFinishGame(player, socket) {
   playerMessageEl.textContent = "";
   cardListEl.style.transform = `translateX(0px)`;
   arrowBtnContainer.style.display = "none";
+  cardContainerEl.style.justifyContent = "center";
 
   btnHand.addEventListener("click", function () {
     console.log("hand clicked");
