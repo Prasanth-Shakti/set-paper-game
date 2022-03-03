@@ -11,8 +11,8 @@ App Available in https://set-paper-game.netlify.app/
 ## How to play
 
 1. Before starting, Each Player chooses a game card, which will be multiplied by 4(i.e., 1 set).</li>
-2. Total number of cards will be No. of players _ 1 set.<br/>
-   eg: 4(players) _ 4 cards(1 set) = 16 cards (i.e., 4 different sets).</li>
+2. Total number of cards will be No. of players * 1 set.<br/>
+   eg: 4(players) * 4 cards(1 set) = 16 cards (i.e., 4 different sets).</li>
 3. After starting game all the cards are shuffled and each player will be assigned 4 cards.</lclass=>
 4. Each player passes any 1 card to next player and this continues until the game finishes.</li>
 5. Game finishes when any player gets any 1 complete set of cards.</li>
