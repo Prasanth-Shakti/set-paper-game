@@ -4,7 +4,12 @@ import "regenerator-runtime/runtime";
 const ENDPOINT = "localhost:5000";
 const socket = io(ENDPOINT);
 
-import { createAvatar, recieveAvatar } from "./Pages/avatar";
+import {
+  createAvatar,
+  recieveAvatar,
+  createNames,
+  recieveNames,
+} from "./Pages/randomGenerator";
 import {
   createRoom,
   gameCreated,
@@ -40,6 +45,10 @@ window.addEventListener("resize", logWindowResize);
 //Avatar
 createAvatar(socket);
 recieveAvatar(socket);
+
+//names
+createNames(socket);
+recieveNames(socket);
 
 //create room
 createRoom(socket);

@@ -14,6 +14,8 @@ import {
   skinColorArray,
   mouthTypeArray,
 } from "./avatarOptions.js";
+import { botNames } from "./botNames.js";
+import { botCardNames } from "./botCardNames.js";
 import { generateRandomElementFromArray } from "./index.js";
 import { avatarURL } from "../config.js";
 
@@ -38,4 +40,12 @@ const generateAvatar = function () {
   return avatar;
 };
 
-export { generateAvatar };
+const generatePlayerName = function () {
+  return generateRandomElementFromArray(botNames);
+};
+
+const generateCardName = function () {
+  return generateRandomElementFromArray(botCardNames);
+};
+
+export { generateAvatar, generatePlayerName, generateCardName };

@@ -126,6 +126,9 @@ tr {
   .hand-circle {
     width: 25%;
   }
+  .credit-container {
+    width: auto;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -226,6 +229,9 @@ tr {
   .hand-circle {
     width: 25%;
   }
+  .credit-container {
+    width: auto;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -325,68 +331,10 @@ tr {
   .hand-circle {
     width: 20%;
   }
+  .credit-container {
+    width: auto;
+  }
 }
-
-/* Large devices (laptops/desktops, 992px and up) */
-/* @media only screen and (min-width: 992px) {
-  h1 {
-    font-size: 20px;
-  }
-  a {
-    font-size: 15px;
-  }
-  h2,
-  h4 {
-    font-size: 15px;
-    max-width: max-content;
-  }
-  input,
-  select {
-    height: 35px;
-  }
-  .host-input-control,
-  .guest-input-control {
-    height: 90px;
-  }
-  .player-section,
-  .settings-section {
-    flex-direction: column;
-  }
-  .img-avatar {
-    width: 60px;
-    height: 60px;
-  }
-  .host-player,
-  .host-settings,
-  .guest-settings,
-  .rules-settings,
-  .results {
-    height: auto;
-    width: 500px;
-  }
-  .guest-player {
-    height: auto;
-    width: 500px;
-  }
-  .btn-avatar {
-    font-size: 10px;
-  }
-  .padLeftt20 {
-    padding-left: 15px;
-  }
-
-  .max-player-select,
-  .game-room {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .input-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-} */
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
@@ -486,6 +434,9 @@ tr {
 
   .hand-circle {
     width: 8%;
+  }
+  .credit-container {
+    width: 20%;
   }
 }
 
@@ -589,7 +540,6 @@ a {
 .host-settings,
 .guest-settings,
 .rules-settings {
-  /* height: 520px; */
   justify-content: flex-start;
 }
 .results {
@@ -612,11 +562,6 @@ a {
   justify-content: space-between;
 }
 
-/* .input-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-} */
 .container {
   margin: 20px 0px 20px 0px;
 }
@@ -665,6 +610,15 @@ a {
   border-radius: 5px;
 }
 
+.btn-container {
+  display: flex;
+}
+.btn-random {
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /*------------------ separator-------------- */
 .player-separator {
   color: #ffffff;
@@ -699,12 +653,7 @@ a {
 .player-isHost {
   margin: 5px;
 }
-/* .max-player-select,
-.game-room {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-} */
+
 .marginTop20 {
   margin-top: 20px;
 }
@@ -906,30 +855,22 @@ a {
 /* cards list */
 .card-list {
   display: flex;
-  /* width: 15%;
-  overflow: hidden; */
   max-height: 100%;
-  /* overflow: auto; */
   transition: transform 1s;
   transform: translateX(0%);
-  /* justify-content: center; */
 }
 .card {
   display: flex;
   margin: 15px 5px 25px 5px;
   flex-direction: column;
-  /* min-width: 150px; */
   background: #ffffff;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.07);
-  /* overflow: hidden; */
   border-radius: 4px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   overflow-wrap: anywhere;
   padding: 5px;
-  /* transform: translateX(0%);
-  transition: transform 1s; */
 }
 .card-container {
   display: flex;
@@ -949,7 +890,6 @@ a {
 .left-btn,
 .right-btn {
   padding: 5px 10px 0px 10px;
-  /* background-color: white; */
   border: 1.5px solid;
   width: 30px;
   height: 30px;

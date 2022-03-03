@@ -6,6 +6,8 @@ import {
   generateGameID,
   playerJoin,
   generateAvatar,
+  generatePlayerName,
+  generateCardName,
   getRoomPlayers,
   getCurrentPlayer,
   getActivePlayer,
@@ -105,6 +107,12 @@ io.on("connection", (socket) => {
   socket.on("createAvatar", () => {
     const avatar = generateAvatar();
     socket.emit("avatarCreated", avatar);
+  });
+
+  socket.on("getRandomNames", () => {
+    const playerName = generatePlayerName();
+    const cardName = generateCardName();
+    socket.emit("randomNamesCreated", { playerName, cardName });
   });
 
   socket.on("changeMaxPlayers", (data) => {

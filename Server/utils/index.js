@@ -1,4 +1,8 @@
-import { generateAvatar } from "./avatar.js";
+import {
+  generateAvatar,
+  generatePlayerName,
+  generateCardName,
+} from "./randomGenerator.js";
 import { generateRandomElementFromArray, getRoomPlayers } from "./common.js";
 import { generateGameID } from "./gameID.js";
 import {
@@ -19,8 +23,6 @@ import {
   getCurrentPlayer,
   getActivePlayer,
 } from "./shuffledPlayers.js";
-import { botNames } from "./botNames.js";
-import { botCardNames } from "./botCardNames.js";
 
 export {
   generateAvatar,
@@ -40,6 +42,6 @@ export {
   getCurrentPlayer,
   getActivePlayer,
   checkPlayerAndCardexist,
-  botNames,
-  botCardNames,
+  generatePlayerName,
+  generateCardName,
 };
